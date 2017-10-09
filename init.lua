@@ -40,31 +40,31 @@ minetest.register_craft({
 minetest.register_tool("lavastuff:helmet", {
 		description = "Lava Helmet",
 		inventory_image = "lavastuff_inv_helmet.png",
-		groups = {armor_head=10, armor_heal=2, armor_use=200},
+		groups = {armor_head=10, armor_heal=2, armor_use=100},
 		wear = 0,
 	})
 	minetest.register_tool("lavastuff:chestplate", {
 		description = "Lava Chestplate",
 		inventory_image = "lavastuff_inv_chestplate.png",
-		groups = {armor_torso=10, armor_heal=2, armor_use=200},
+		groups = {armor_torso=10, armor_heal=2, armor_use=100},
 		wear = 0,
 	})
 	minetest.register_tool("lavastuff:leggings", {
 		description = "Lava Leggings",
 		inventory_image = "lavastuff_inv_leggings.png",
-		groups = {armor_legs=10, armor_heal=2, armor_use=200},
+		groups = {armor_legs=10, armor_heal=2, armor_use=100},
 		wear = 0,
 	})
 	minetest.register_tool("lavastuff:boots", {
 		description = "Lava Boots",
 		inventory_image = "lavastuff_inv_boots.png",
-		groups = {armor_feet=10, armor_heal=2, armor_use=200},
+		groups = {armor_feet=10, armor_heal=2, armor_use=100},
 		wear = 0,
         })
         minetest.register_tool("lavastuff:shield", {
 		description = "Lava Shield",
 		inventory_image = "lavastuff_inven_shield.png",
-		groups = {armor_shield=10, armor_heal=2, armor_use=200},
+		groups = {armor_shield=10, armor_heal=2, armor_use=100},
 		wear = 0,
 	})
 minetest.register_craft({
