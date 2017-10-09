@@ -1,2 +1,3 @@
 default
 mobs_monster
+3d_armor
