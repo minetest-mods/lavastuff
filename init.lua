@@ -1,3 +1,17 @@
+minetest.register_craftitem("lavastuff:orb", {
+    description = "Lava orb",
+    inventory_image = "zmobs_lava_orb.png"
+})
+minetest.register_craft({
+type = 'shapeless',
+output = 'mobs:lava_orb',
+recipe = {"lavastuff:orb"}
+})
+minetest.register_craft({
+type = 'shapeless',
+output = 'mobs:lava_orb 9',
+recipe = {'lavastuff:block'}
+})
 minetest.register_tool("lavastuff:sword", {
 description = "Lava Sword",
 inventory_image = "lavastuff_sword.png",
@@ -107,3 +121,79 @@ minetest.register_craft({
 		{'', 'mobs:lava_orb', ''},
 	}
 })
+if not minetest.global_exists("mobs_monster") then
+minetest.register_craftitem("lavastuff:orb", {
+    description = "Lava orb",
+    inventory_image = "zmobs_lava_orb.png"
+})
+minetest.register_craft({
+output = 'lavastuff:orb',
+recipe = {
+{'', 'bucket:bucket_lava', ''},
+{'bucket:bucket_lava', 'bucket:bucket_lava', 'bucket:bucket_lava'},
+{'', 'bucket:bucket_lava', ''},
+}
+})
+minetest.register_craft({
+	output = 'lavastuff:helmet',
+	recipe = {
+		{'lavastuff:orb', 'lavastuff:orb', 'lavastuff:orb'},
+		{'lavastuff:orb', '', 'lavastuff:orb'},
+		{'', '', ''},
+	}
+})
+minetest.register_craft({
+	output = 'lavastuff:chestplate',
+	recipe = {
+		{'lavastuff:orb', '', 'lavastuff:orb'},
+		{'lavastuff:orb', 'lavastuff:orb', 'lavastuff:orb'},
+		{'lavastuff:orb', 'lavastuff:orb', 'lavastuff:orb'},
+	}
+})
+minetest.register_craft({
+	output = 'lavastuff:leggings',
+	recipe = {
+		{'lavastuff:orb', 'lavastuff:orb', 'lavastuff:orb'},
+		{'lavastuff:orb', '', 'lavastuff:orb'},
+		{'lavastuff:orb', '', 'lavastuff:orb'},
+	}
+})
+minetest.register_craft({
+	output = 'lavastuff:boots',
+	recipe = {
+		{'', '', ''},
+		{'lavastuff:orb', '', 'lavastuff:orb'},
+		{'lavastuff:orb', '', 'lavastuff:orb'},
+	}
+})
+minetest.register_craft({
+	output = 'lavastuff:shield',
+	recipe = {
+		{'lavastuff:orb', 'lavastuff:orb', 'lavastuff:orb'},
+		{'lavastuff:orb', 'lavastuff:orb', 'lavastuff:orb'},
+		{'', 'lavastuff:orb', ''},
+	}
+})
+minetest.register_craft({
+type = 'shapeless',
+output = 'lavastuff:orb 9',
+recipe = {'lavastuff:block'}
+})
+minetest.register_craft({
+	output = 'lavastuff:sword',
+	recipe = {
+		{'lavastuff:orb'},
+		{'lavastuff:orb'},
+		{'default:obsidian_shard'},
+	}
+})
+minetest.register_craft({
+	output = 'lavastuff:block',
+	recipe = {
+		{'lavastuff:orb', 'lavastuff:orb', 'lavastuff:orb'},
+		{'lavastuff:orb', 'lavastuff:orb', 'lavastuff:orb'},
+		{'lavastuff:orb', 'lavastuff:orb', 'lavastuff:orb'},
+	}
+})
+end
+
