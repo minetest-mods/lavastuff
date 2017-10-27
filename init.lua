@@ -176,6 +176,11 @@ minetest.register_craft({
 })
 minetest.register_craft({
 type = 'shapeless',
+output = 'mobs:lava_orb 0',
+recipe = {'lavastuff:block'}
+})
+minetest.register_craft({
+type = 'shapeless',
 output = 'lavastuff:orb 9',
 recipe = {'lavastuff:block'}
 })
@@ -196,4 +201,3 @@ minetest.register_craft({
 	}
 })
 end
-
