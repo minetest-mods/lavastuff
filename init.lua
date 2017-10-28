@@ -1,3 +1,53 @@
+minetest.register_node("lavastuff:stair", {
+  description = 'Lava Stair',
+  drawtype = "mesh",
+  mesh = "stairs_stair.obj",
+  tiles = {"lavastuff_block.png"},
+  paramtype = "light",
+  paramtype2 = "facedir",
+  is_ground_content = false,
+  groups = {cracky = 1, level = 2},
+  light_source = default.LIGHT_MAX,
+  selection_box = {
+    type = "fixed",
+    fixed = {
+      {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
+      {-0.5, 0, 0, 0.5, 0.5, 0.5},
+    },
+  },
+  collision_box = {
+    type = "fixed",
+    fixed = {
+      {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
+      {-0.5, 0, 0, 0.5, 0.5, 0.5},
+    },
+  },
+})
+minetest.register_craft ({
+output = "lavastuff:stair 6",
+recipe = {
+{'', '', 'lavastuff:block'},
+{'', 'lavastuff:block', 'lavastuff:block'},
+{'lavastuff:block', 'lavastuff:block', 'lavastuff:block'}
+}
+})
+minetest.register_node("lavastuff:slab", {
+    description = "Lava Slab",
+    drawtype = "nodebox",
+    tiles = {"lavastuff_block.png"},
+    paramtype = "light",
+    groups = {cracky = 1, level = 2},
+  	light_source = default.LIGHT_MAX,
+    node_box = {
+        type = "fixed",
+        fixed = {-0.5, -0.5, -0.5, 0.5, 0.0, 0.5}
+    }
+})
+minetest.register_craft ({
+type = 'shapeless',
+output = "lavastuff:slab 2",
+recipe = {'lavastuff:block', 'lavastuff:block'}
+})
 minetest.register_craftitem("lavastuff:orb", {
     description = "Lava orb",
     inventory_image = "zmobs_lava_orb.png"
