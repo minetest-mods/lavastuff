@@ -54,6 +54,34 @@ tool_capabilities = {
 	},
 	sound = {breaks = "default_tool_breaks"},
 })
+if not minetest.global_exists("mobs_monster") then
+minetest.register_tool("lavastuff:pick", {
+	description = ("Lava Pickaxe"),
+	inventory_image = "lavastuff_pick.png",
+	tool_capabilities = {
+		full_punch_interval = 0.7,
+		max_drop_level=3,
+		groupcaps={
+			cracky = {times={[1]=1.80, [2]=0.80, [3]=0.40}, uses=50, maxlevel=3},
+		},
+		damage_groups = {fleshy=5},
+	},
+})
+end
+if minetest.global_exists("mobs_monster") then
+minetest.register_tool("::mobs:pick_lava", {
+description = ("Lava Pickaxe"),
+inventory_image = "lavastuff_pick.png",
+tool_capabilities = {
+  full_punch_interval = 0.7,
+  max_drop_level=3,
+  groupcaps={
+    cracky = {times={[1]=1.80, [2]=0.80, [3]=0.40}, uses=50, maxlevel=3},
+  },
+  damage_groups = {fleshy=5},
+},
+})
+end
 minetest.register_tool("lavastuff:shovel", {
 	description = "Lava Shovel",
 	inventory_image = "lavastuff_shovel.png",
@@ -95,6 +123,14 @@ minetest.register_craft({
 	}
 })
 minetest.register_craft({
+	output = "lavastuff:pick",
+	recipe = {
+		{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+		{"", "default:obsidian_shard", ""},
+		{"", "default:obsidian_shard", ""},
+	}
+})
+minetest.register_craft({
 	output = 'lavastuff:shovel',
 	recipe = {
 		{'lavastuff:ingot'},
@@ -110,6 +146,16 @@ minetest.register_craft({
 		{'', 'default:obsidian_shard', ''},
 	}
 })
+if minetest.global_exists ("mobs_monster") then
+minetest.register_craft({
+	output = "mobs:pick_lava",
+  recipe = {
+		{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+		{"", "default:obsidian_shard", ""},
+		{"", "default:obsidian_shard", ""},
+	}
+})
+end
 
 --
 -- Armor
