@@ -1,3 +1,4 @@
+--
 -- Crafitems
 --
 
@@ -5,37 +6,36 @@ minetest.register_craftitem("lavastuff:ingot", {
 description = "Lava ingot",
 inventory_image = "lavastuff_ingot.png",
 })
-minetest.register_craftitem("lavastuff:orb", {
-    description = "Lava orb",
-    inventory_image = "zmobs_lava_orb.png"
+
+minetest.register_craft({
+    type = 'shapeless',
+    output = 'lavastuff:ingot',
+    recipe = {"default:mese_crystal", "lavastuff:orb"}
 })
 
 --
 -- Crafitem Crafts
 --
 
-if not minetest.global_exists("mobs_monster") then
-minetest.register_craft({
-output = 'lavastuff:orb',
-recipe = {
-{"bucket:bucket_lava", "bucket:bucket_lava", "bucket:bucket_lava"},
-{"bucket:bucket_lava", "default:mese_crystal", "bucket:bucket_lava"},
-{"bucket:bucket_lava", "bucket:bucket_lava", "bucket:bucket_lava"}
-}
-})
-minetest.register_craft({
-type = 'shapeless',
-output = 'lavastuff:ingot',
-recipe = {"default:mese_crystal", "lavastuff:orb"}
-})
-end
-if minetest.global_exists("mobs_monster") then
-minetest.register_craft({
-type = 'shapeless',
-output = 'lavastuff:ingot',
-recipe = {"default:mese_crystal", "mobs:lava_orb"}
-})
-end
+if not minetest.get_modpath("mobs_monster") then
+    minetest.register_craftitem("lavastuff:orb", {
+      description = "Lava orb",
+      inventory_image = "zmobs_lava_orb.png"
+    })
+
+    minetest.register_alias("mobs:lava_orb", "lavastuff:orb")
+
+    minetest.register_craft({
+    output = 'lavastuff:orb',
+    recipe = {
+    {"bucket:bucket_lava", "bucket:bucket_lava", "bucket:bucket_lava"},
+    {"bucket:bucket_lava", "default:mese_crystal", "bucket:bucket_lava"},
+    {"bucket:bucket_lava", "bucket:bucket_lava", "bucket:bucket_lava"}
+    }
+    })
+  else
+    minetest.register_alias("lavastuff:orb", "mobs:lava_orb")
+  end
 
 --
 -- Tools
