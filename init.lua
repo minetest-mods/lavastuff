@@ -54,33 +54,77 @@ tool_capabilities = {
 	},
 	sound = {breaks = "default_tool_breaks"},
 })
-if not minetest.global_exists("mobs_monster") then
-minetest.register_tool("lavastuff:pick", {
-	description = ("Lava Pickaxe"),
-	inventory_image = "lavastuff_pick.png",
-	tool_capabilities = {
-		full_punch_interval = 0.7,
-		max_drop_level=3,
-		groupcaps={
-			cracky = {times={[1]=1.80, [2]=0.80, [3]=0.40}, uses=50, maxlevel=3},
-		},
-		damage_groups = {fleshy=5},
-	},
-})
-end
-if minetest.global_exists("mobs_monster") then
-minetest.register_tool("::mobs:pick_lava", {
-description = ("Lava Pickaxe"),
-inventory_image = "lavastuff_pick.png",
-tool_capabilities = {
-  full_punch_interval = 0.7,
-  max_drop_level=3,
-  groupcaps={
-    cracky = {times={[1]=1.80, [2]=0.80, [3]=0.40}, uses=50, maxlevel=3},
+if not minetest.get_modpath("mobs_monster") then
+  minetest.register_alias("mobs:pick_lava", "lavastuff:pick")
+  minetest.register_tool("lavastuff:pick", {
+  	description = ("Lava Pickaxe"),
+  	inventory_image = "lavastuff_pick.png",
+  	tool_capabilities = {
+  		full_punch_interval = 0.7,
+  		max_drop_level=3,
+  		groupcaps={
+  			cracky = {times={[1]=1.80, [2]=0.80, [3]=0.40}, uses=50, maxlevel=3},
+  		},
+  		damage_groups = {fleshy=5},
+  	},
+  })
+  -- Lava Pick (restores autosmelt functionality)
+
+  local old_handle_node_drops = minetest.handle_node_drops
+
+  function minetest.handle_node_drops(pos, drops, digger)
+
+    -- are we holding Lava Pick?
+    if digger:get_wielded_item():get_name() ~= ("lavastuff:pick") then
+      return old_handle_node_drops(pos, drops, digger)
+    end
+
+    -- reset new smelted drops
+    local hot_drops = {}
+
+    -- loop through current node drops
+    for _, drop in pairs(drops) do
+
+      -- get cooked output of current drops
+      local stack = ItemStack(drop)
+      local output = minetest.get_craft_result({
+        method = "cooking",
+        width = 1,
+        items = {drop}
+      })
+
+      -- if we have cooked result then add to new list
+      if output
+      and output.item
+      and not output.item:is_empty() then
+
+        table.insert(hot_drops,
+          ItemStack({
+            name = output.item:get_name(),
+            count = output.item:to_table().count,
+          })
+        )
+      else -- if not then return normal drops
+        table.insert(hot_drops, stack)
+      end
+    end
+
+    return old_handle_node_drops(pos, hot_drops, digger)
+  end
+else
+  minetest.register_alias("lavastuff:pick", "mobs:pick_lava")
+  minetest.register_tool(":mobs:pick_lava", {
+  description = ("Lava Pickaxe"),
+  inventory_image = "lavastuff_pick.png",
+  tool_capabilities = {
+    full_punch_interval = 0.7,
+    max_drop_level=3,
+    groupcaps={
+      cracky = {times={[1]=1.80, [2]=0.80, [3]=0.40}, uses=50, maxlevel=3},
+    },
+    damage_groups = {fleshy=5},
   },
-  damage_groups = {fleshy=5},
-},
-})
+  })
 end
 minetest.register_tool("lavastuff:shovel", {
 	description = "Lava Shovel",
@@ -146,15 +190,14 @@ minetest.register_craft({
 		{'', 'default:obsidian_shard', ''},
 	}
 })
-if minetest.global_exists ("mobs_monster") then
-minetest.register_craft({
-	output = "mobs:pick_lava",
-  recipe = {
-		{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
-		{"", "default:obsidian_shard", ""},
-		{"", "default:obsidian_shard", ""},
-	}
-})
+if minetest.get_modpath("mobs_monster") then
+  minetest.clear_craft({
+    recipe = {
+  		{"mobs:lava_orb", "mobs:lava_orb", "mobs:lava_orb"},
+  		{"", "default:obsidian_shard", ""},
+  		{"", "default:obsidian_shard", ""},
+  	}
+  })
 end
 
 --
