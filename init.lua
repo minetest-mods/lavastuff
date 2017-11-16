@@ -204,6 +204,7 @@ end
 -- Armor
 --
 
+if minetest.get_modpath("3d_armor") then
 minetest.register_tool("lavastuff:helmet", {
 		description = "Lava Helmet",
 		inventory_image = "lavastuff_inv_helmet.png",
@@ -234,11 +235,12 @@ minetest.register_tool("lavastuff:helmet", {
 		groups = {armor_shield=10, armor_heal=10, armor_use=100, armor_fire=10},
 		wear = 0,
 	})
-
+end
   --
   -- Armor Crafts
   --
 
+if minetest.get_modpath("3d_armor") then
   minetest.register_craft({
   	output = 'lavastuff:helmet',
   	recipe = {
@@ -279,7 +281,7 @@ minetest.register_tool("lavastuff:helmet", {
   		{'', 'lavastuff:ingot', ''},
   	}
   })
-
+end
   --
   -- Nodes
   --
