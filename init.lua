@@ -367,15 +367,15 @@ if minetest.get_modpath("toolranks") then
        original_description = "Lava Sword",
        description = toolranks.create_description("Lava Sword", 0, 1),
         after_use = toolranks.new_afteruse})
-	inetest.override_item("lavastuff:pick", {
+	minetest.override_item("lavastuff:pick", {
        original_description = "Lava Pickaxe",
        description = toolranks.create_description("Lava Pickaxe", 0, 1),
         after_use = toolranks.new_afteruse})
-	inetest.override_item("lavastuff:axe", {
+	minetest.override_item("lavastuff:axe", {
        original_description = "Lava Axe",
        description = toolranks.create_description("Lava Axe", 0, 1),
         after_use = toolranks.new_afteruse})
-	inetest.override_item("lavastuff:shovel", {
+	minetest.override_item("lavastuff:shovel", {
        original_description = "Lava Shovel",
        description = toolranks.create_description("Lava Shovel", 0, 1),
         after_use = toolranks.new_afteruse})
