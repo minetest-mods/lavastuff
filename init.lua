@@ -207,38 +207,48 @@ end
 --
 
 if minetest.get_modpath("3d_armor") then
-    minetest.register_tool("lavastuff:helmet", {
+    armor:register_armor("lavastuff:helmet", {
         description = "Lava Helmet",
         inventory_image = "lavastuff_inv_helmet.png",
-        groups = {armor_head=10, armor_heal=10, armor_use=100, armor_fire=10},
+        groups = {armor_head=17, armor_heal=10, armor_use=100, armor_fire=10},
+        armor_groups = {fleshy=20},
+        damage_groups = {cracky=2, snappy=1, level=3},
         wear = 0,
     })
 
-    minetest.register_tool("lavastuff:chestplate", {
+    armor:register_armor("lavastuff:chestplate", {
         description = "Lava Chestplate",
         inventory_image = "lavastuff_inv_chestplate.png",
         groups = {armor_torso=10, armor_heal=10, armor_use=100, armor_fire=10},
+        armor_groups = {fleshy=20},
+        damage_groups = {cracky=2, snappy=1, level=3},
         wear = 0,
     })
 
-    minetest.register_tool("lavastuff:leggings", {
+    armor:register_armor("lavastuff:leggings", {
         description = "Lava Leggings",
         inventory_image = "lavastuff_inv_leggings.png",
         groups = {armor_legs=10, armor_heal=10, armor_use=100, armor_fire=10},
+        armor_groups = {fleshy=20},
+        damage_groups = {cracky=2, snappy=1, level=3},
         wear = 0,
     })
 
-    minetest.register_tool("lavastuff:boots", {
+    armor:register_armor("lavastuff:boots", {
         description = "Lava Boots",
         inventory_image = "lavastuff_inv_boots.png",
         groups = {armor_feet=10, armor_heal=10, armor_use=100, armor_fire=10},
+        armor_groups = {fleshy=17},
+        damage_groups = {cracky=2, snappy=1, level=3},
         wear = 0,
     })
 
-    minetest.register_tool("lavastuff:shield", {
+    armor:register_armor("lavastuff:shield", {
         description = "Lava Shield",
         inventory_image = "lavastuff_inven_shield.png",
         groups = {armor_shield=10, armor_heal=10, armor_use=100, armor_fire=10},
+        armor_groups = {fleshy=20},
+        damage_groups = {cracky=2, snappy=1, level=3},
         wear = 0,
     })
 end
