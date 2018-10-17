@@ -1,3 +1,47 @@
+lavastuff = {}
+
+function lavastuff.burn_drops(tool)
+    local old_handle_node_drops = minetest.handle_node_drops
+
+    function minetest.handle_node_drops(pos, drops, digger)
+        if digger:get_wielded_item():get_name() ~= (tool) then -- are we holding Lava Pick?
+            return old_handle_node_drops(pos, drops, digger)
+        end
+
+        -- reset new smelted drops
+        local hot_drops = {}
+
+        -- loop through current node drops
+        for _, drop in pairs(drops) do -- get cooked output of current drops
+            local stack = ItemStack(drop)
+            local output = minetest.get_craft_result({
+                method = "cooking",
+                width = 1,
+                items = {drop}
+            })
+
+            -- if we have cooked result then add to new list
+            if output and output.item and not output.item:is_empty() then
+                table.insert(hot_drops,
+                    ItemStack({
+                        name = output.item:get_name(),
+                        count = output.item:to_table().count,
+                    })
+                )
+            else -- if not then return normal drops
+                table.insert(hot_drops, stack)
+            end
+        end
+
+        return old_handle_node_drops(pos, hot_drops, digger)
+    end
+end
+
+lavastuff.burn_drops("lavastuff:sword")
+lavastuff.burn_drops("lavastuff:axe")
+lavastuff.burn_drops("lavastuff:shovel")
+
+--
 -- Crafitems
 --
 
@@ -72,40 +116,7 @@ if not minetest.get_modpath("mobs_monster") then
 
 -- Lava Pick (restores autosmelt functionality)
 
-    local old_handle_node_drops = minetest.handle_node_drops
-
-    function minetest.handle_node_drops(pos, drops, digger)
-        if digger:get_wielded_item():get_name() ~= ("lavastuff:pick") then -- are we holding Lava Pick?
-            return old_handle_node_drops(pos, drops, digger)
-        end
-
-        -- reset new smelted drops
-        local hot_drops = {}
-
-        -- loop through current node drops
-        for _, drop in pairs(drops) do -- get cooked output of current drops
-            local stack = ItemStack(drop)
-            local output = minetest.get_craft_result({
-                method = "cooking",
-                width = 1,
-                items = {drop}
-            })
-
-            -- if we have cooked result then add to new list
-            if output and output.item and not output.item:is_empty() then
-                table.insert(hot_drops,
-                    ItemStack({
-                        name = output.item:get_name(),
-                        count = output.item:to_table().count,
-                    })
-                )
-            else -- if not then return normal drops
-                table.insert(hot_drops, stack)
-            end
-        end
-
-        return old_handle_node_drops(pos, hot_drops, digger)
-    end
+    lavastuff.burn_drops("lavastuff:pick")
 else
     minetest.register_alias("lavastuff:pick", "mobs:pick_lava")
 
