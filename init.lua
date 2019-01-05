@@ -97,7 +97,7 @@ minetest.register_tool("lavastuff:sword", {
        },
        damage_groups = {fleshy=8},
     },
-    on_use = function(itemstack, user, pointed_thing)
+    on_secondary_use = function(itemstack, user, pointed_thing)
         if lavastuff.enable_lightup == true then
             local pos = user:get_pos()
             
