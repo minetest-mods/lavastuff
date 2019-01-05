@@ -1,5 +1,7 @@
 lavastuff = {}
 
+lavastuff.enable_lightup = true -- Lights up the area around the player that punches air with the lava sword
+
 function lavastuff.burn_drops(tool)
     local old_handle_node_drops = minetest.handle_node_drops
 
@@ -95,6 +97,18 @@ minetest.register_tool("lavastuff:sword", {
        },
        damage_groups = {fleshy=8},
     },
+    on_use = function(itemstack, user, pointed_thing)
+        if lavastuff.enable_lightup == true then
+            local pos = user:get_pos()
+            
+            pos.y = pos.y + 1
+
+            if minetest.get_node(pos).name == "air" then
+                minetest.set_node(pos, {name = "lavastuff:light"})
+                minetest.after(0.4, minetest.remove_node, pos)
+            end
+        end
+    end,
     sound = {breaks = "default_tool_breaks"},
 })
 
@@ -393,6 +407,18 @@ minetest.register_craft ({
     recipe = {'lavastuff:block', 'lavastuff:block'}
 })
 
+minetest.register_craft ({
+    type = 'shapeless',
+    output = "lavastuff:ingot 9",
+    recipe = {'lavastuff:block'}
+})
+
+minetest.register_craft ({
+    type = 'shapeless',
+    output = "lavastuff:block",
+    recipe = {'lavastuff:slab', "lavastuff:slab"}
+})
+
 --
 --Toolranks support
 --
@@ -422,3 +448,21 @@ if minetest.get_modpath("toolranks") then
         after_use = toolranks.new_afteruse
     })
 end
+
+--
+-- Light node
+--
+
+minetest.register_node("lavastuff:light", {
+	description = "You shouldnt be holding this",
+	drawtype = "airlike",
+	paramtype = "light",
+	walkable = false,
+	pointable = false,
+	diggable = false,
+	buildable_to = true,
+	sunlight_propagates = true,
+	light_source = 15,
+    inventory_image = "air.png^default_mese_crystal.png",
+    groups = {not_in_creative_inventory = 1}
+})
