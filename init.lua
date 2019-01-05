@@ -73,9 +73,9 @@ if not minetest.get_modpath("mobs_monster") then
     minetest.register_craft({
         output = 'lavastuff:orb',
         recipe = {
-            {"bucket:bucket_lava", "bucket:bucket_lava", "bucket:bucket_lava"},
+            {"", "bucket:bucket_lava", ""},
             {"bucket:bucket_lava", "default:mese_crystal", "bucket:bucket_lava"},
-            {"bucket:bucket_lava", "bucket:bucket_lava", "bucket:bucket_lava"}
+            {"", "bucket:bucket_lava", ""}
         }
     })
   else
@@ -126,6 +126,18 @@ if not minetest.get_modpath("mobs_monster") then
             },
             damage_groups = {fleshy=5},
         },
+        on_secondary_use = function(itemstack, user, pointed_thing)
+            if lavastuff.enable_lightup == true then
+                local pos = user:get_pos()
+                
+                pos.y = pos.y + 1
+    
+                if minetest.get_node(pos).name == "air" then
+                    minetest.set_node(pos, {name = "lavastuff:light"})
+                    minetest.after(0.4, minetest.remove_node, pos)
+                end
+            end
+        end,
     })
 
 -- Lava Pick (restores autosmelt functionality)
