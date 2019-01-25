@@ -53,8 +53,8 @@ minetest.register_craftitem("lavastuff:ingot", {
 })
 
 minetest.register_craft({
-    type = 'shapeless',
-    output = 'lavastuff:ingot',
+    type = "shapeless",
+    output = "lavastuff:ingot",
     recipe = {"default:mese_crystal", "lavastuff:orb"}
 })
 
@@ -71,16 +71,17 @@ if not minetest.get_modpath("mobs_monster") then
     minetest.register_alias("mobs:lava_orb", "lavastuff:orb")
 
     minetest.register_craft({
-        output = 'lavastuff:orb',
+        output = "lavastuff:orb",
         recipe = {
             {"", "bucket:bucket_lava", ""},
             {"bucket:bucket_lava", "default:mese_crystal", "bucket:bucket_lava"},
             {"", "bucket:bucket_lava", ""}
-        }
+        },
+        replacements = {{"bucket:bucket_lava", "bucket:bucket_empty 4"}}
     })
-  else
+else
     minetest.register_alias("lavastuff:orb", "mobs:lava_orb")
-  end
+end
 
 --
 -- Tools
@@ -194,11 +195,11 @@ minetest.register_tool("lavastuff:axe", {
 --
 
 minetest.register_craft({
-    output = 'lavastuff:sword',
+    output = "lavastuff:sword",
     recipe = {
-        {'lavastuff:ingot'},
-        {'lavastuff:ingot'},
-        {'default:obsidian_shard'},
+        {"lavastuff:ingot"},
+        {"lavastuff:ingot"},
+        {"default:obsidian_shard"},
     }
 })
 
@@ -212,20 +213,20 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-    output = 'lavastuff:shovel',
+    output = "lavastuff:shovel",
     recipe = {
-        {'lavastuff:ingot'},
-        {'default:obsidian_shard'},
-        {'default:obsidian_shard'},
+        {"lavastuff:ingot"},
+        {"default:obsidian_shard"},
+        {"default:obsidian_shard"},
     }
 })
 
 minetest.register_craft({
-    output = 'lavastuff:axe',
+    output = "lavastuff:axe",
     recipe = {
-        {'lavastuff:ingot', 'lavastuff:ingot', ''},
-        {'lavastuff:ingot', 'default:obsidian_shard', ''},
-        {'', 'default:obsidian_shard', ''},
+        {"lavastuff:ingot", "lavastuff:ingot", ""},
+        {"lavastuff:ingot", "default:obsidian_shard", ""},
+        {"", "default:obsidian_shard", ""},
     }
 })
 
@@ -295,46 +296,46 @@ end
 
 if minetest.get_modpath("3d_armor") then
     minetest.register_craft({
-        output = 'lavastuff:helmet',
+        output = "lavastuff:helmet",
         recipe = {
-            {'lavastuff:ingot', 'lavastuff:ingot', 'lavastuff:ingot'},
-            {'lavastuff:ingot', '', 'lavastuff:ingot'},
-            {'', '', ''},
+            {"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+            {"lavastuff:ingot", "", "lavastuff:ingot"},
+            {"", "", ""},
         }
     })
 
     minetest.register_craft({
-        output = 'lavastuff:chestplate',
+        output = "lavastuff:chestplate",
         recipe = {
-            {'lavastuff:ingot', '', 'lavastuff:ingot'},
-            {'lavastuff:ingot', 'lavastuff:ingot', 'lavastuff:ingot'},
-            {'lavastuff:ingot', 'lavastuff:ingot', 'lavastuff:ingot'},
+            {"lavastuff:ingot", "", "lavastuff:ingot"},
+            {"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+            {"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
         }
     })
 
     minetest.register_craft({
-        output = 'lavastuff:leggings',
+        output = "lavastuff:leggings",
         recipe = {
-            {'lavastuff:ingot', 'lavastuff:ingot', 'lavastuff:ingot'},
-            {'lavastuff:ingot', '', 'lavastuff:ingot'},
-            {'lavastuff:ingot', '', 'lavastuff:ingot'},
+            {"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+            {"lavastuff:ingot", "", "lavastuff:ingot"},
+            {"lavastuff:ingot", "", "lavastuff:ingot"},
         }
     })
 
     minetest.register_craft({
-        output = 'lavastuff:boots',
+        output = "lavastuff:boots",
         recipe = {
-            {'lavastuff:ingot', '', 'lavastuff:ingot'},
-            {'lavastuff:ingot', '', 'lavastuff:ingot'},
+            {"lavastuff:ingot", "", "lavastuff:ingot"},
+            {"lavastuff:ingot", "", "lavastuff:ingot"},
         }
     })
 
     minetest.register_craft({
-        output = 'lavastuff:shield',
+        output = "lavastuff:shield",
         recipe = {
-            {'lavastuff:ingot', 'lavastuff:ingot', 'lavastuff:ingot'},
-            {'lavastuff:ingot', 'lavastuff:ingot', 'lavastuff:ingot'},
-            {'', 'lavastuff:ingot', ''},
+            {"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+            {"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+            {"", "lavastuff:ingot", ""},
         }
     })
 end
@@ -353,7 +354,7 @@ minetest.register_node ("lavastuff:block", {
 })
 
 minetest.register_node("lavastuff:stair", {
-    description = 'Lava Stair',
+    description = "Lava Stair",
     drawtype = "mesh",
     mesh = "stairs_stair.obj",
     tiles = {"lavastuff_block.png"},
@@ -396,39 +397,39 @@ minetest.register_node("lavastuff:slab", {
 --
 
 minetest.register_craft({
-    output = 'lavastuff:block',
+    output = "lavastuff:block",
     recipe = {
-        {'lavastuff:ingot', 'lavastuff:ingot', 'lavastuff:ingot'},
-        {'lavastuff:ingot', 'lavastuff:ingot', 'lavastuff:ingot'},
-        {'lavastuff:ingot', 'lavastuff:ingot', 'lavastuff:ingot'},
+        {"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+        {"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+        {"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
     }
 })
 
 minetest.register_craft ({
     output = "lavastuff:stair 6",
     recipe = {
-        {'', '', 'lavastuff:block'},
-        {'', 'lavastuff:block', 'lavastuff:block'},
-        {'lavastuff:block', 'lavastuff:block', 'lavastuff:block'}
+        {"", "", "lavastuff:block"},
+        {"", "lavastuff:block", "lavastuff:block"},
+        {"lavastuff:block", "lavastuff:block", "lavastuff:block"}
     }
 })
 
 minetest.register_craft ({
-    type = 'shapeless',
+    type = "shapeless",
     output = "lavastuff:slab 4",
-    recipe = {'lavastuff:block', 'lavastuff:block'}
+    recipe = {"lavastuff:block", "lavastuff:block"}
 })
 
 minetest.register_craft ({
-    type = 'shapeless',
+    type = "shapeless",
     output = "lavastuff:ingot 9",
-    recipe = {'lavastuff:block'}
+    recipe = {"lavastuff:block"}
 })
 
 minetest.register_craft ({
-    type = 'shapeless',
+    type = "shapeless",
     output = "lavastuff:block",
-    recipe = {'lavastuff:slab', "lavastuff:slab"}
+    recipe = {"lavastuff:slab", "lavastuff:slab"}
 })
 
 --
