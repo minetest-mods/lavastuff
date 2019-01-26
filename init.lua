@@ -101,7 +101,7 @@ minetest.register_tool("lavastuff:sword", {
     on_secondary_use = function(itemstack, user, pointed_thing)
         if lavastuff.enable_lightup == true then
             local pos = user:get_pos()
-            
+
             pos.y = pos.y + 1
 
             if minetest.get_node(pos).name == "air" then
@@ -130,9 +130,9 @@ if not minetest.get_modpath("mobs_monster") then
         on_secondary_use = function(itemstack, user, pointed_thing)
             if lavastuff.enable_lightup == true then
                 local pos = user:get_pos()
-                
+
                 pos.y = pos.y + 1
-    
+
                 if minetest.get_node(pos).name == "air" then
                     minetest.set_node(pos, {name = "lavastuff:light"})
                     minetest.after(0.4, minetest.remove_node, pos)
@@ -290,9 +290,10 @@ if minetest.get_modpath("3d_armor") then
         wear = 0,
     })
 end
-  --
-  -- Armor Crafts
-  --
+
+--
+-- Armor Crafts
+--
 
 if minetest.get_modpath("3d_armor") then
     minetest.register_craft({
