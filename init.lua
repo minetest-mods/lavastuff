@@ -349,7 +349,7 @@ minetest.register_node ("lavastuff:block", {
     tiles = {"lavastuff_block.png"},
     is_ground_content = false,
     sounds = default.node_sound_stone_defaults(),
-    groups = {cracky = 1, level = 2},
+    groups = {cracky = 2, level = 2},
     light_source = default.LIGHT_MAX,
 })
 
@@ -368,16 +368,26 @@ minetest.register_craft({
     }
 })
 
-stairs.register_stair_and_slab(
-	"lava",
-	"lavastuff:block",
-	{cracky = 3},
-	{"lavastuff_block.png"},
-	"Lava Stair",
-	"Lava Slab",
-	default.node_sound_stone_defaults(),
-	true
-)
+if not minetest.get_modpath("moreblocks") then
+    stairs.register_stair_and_slab(
+        "lava",
+        "lavastuff:block",
+        {cracky = 2, level = 2},
+        {"lavastuff_block.png"},
+        "Lava Stair",
+        "Lava Slab",
+        default.node_sound_stone_defaults(),
+        true
+    )
+else
+    stairsplus:register_all("lavastuff", "lava", "lavastuff:ingot", {
+        description = "Lava",
+        tiles = {"lavastuff_block.png"},
+        groups = {cracky = 2, level = 2},
+        light_source = default.LIGHT_MAX,
+        sounds = default.node_sound_wood_defaults(),
+    })
+end
 
 --
 --Toolranks support
