@@ -353,48 +353,11 @@ minetest.register_node ("lavastuff:block", {
     light_source = default.LIGHT_MAX,
 })
 
-minetest.register_node("lavastuff:stair", {
-    description = "Lava Stair",
-    drawtype = "mesh",
-    mesh = "stairs_stair.obj",
-    tiles = {"lavastuff_block.png"},
-    paramtype = "light",
-    paramtype2 = "facedir",
-    is_ground_content = false,
-    groups = {cracky = 1, level = 2},
-    light_source = default.LIGHT_MAX,
-    selection_box = {
-        type = "fixed",
-        fixed = {
-        {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
-        {-0.5, 0, 0, 0.5, 0.5, 0.5},
-        },
-    },
-    collision_box = {
-        type = "fixed",
-        fixed = {
-        {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
-        {-0.5, 0, 0, 0.5, 0.5, 0.5},
-        },
-    },
+minetest.register_craft({
+    type = "shapeless",
+    output = "lavastuff:ingot 9",
+    recipe = {"lavastuff:block"}
 })
-
-minetest.register_node("lavastuff:slab", {
-    description = "Lava Slab",
-    drawtype = "nodebox",
-    tiles = {"lavastuff_block.png"},
-    paramtype = "light",
-    groups = {cracky = 1, level = 2},
-    light_source = default.LIGHT_MAX,
-    node_box = {
-      type = "fixed",
-      fixed = {-0.5, -0.5, -0.5, 0.5, 0.0, 0.5}
-    }
-})
-
---
--- Node Crafts
---
 
 minetest.register_craft({
     output = "lavastuff:block",
@@ -405,32 +368,16 @@ minetest.register_craft({
     }
 })
 
-minetest.register_craft ({
-    output = "lavastuff:stair 6",
-    recipe = {
-        {"", "", "lavastuff:block"},
-        {"", "lavastuff:block", "lavastuff:block"},
-        {"lavastuff:block", "lavastuff:block", "lavastuff:block"}
-    }
-})
-
-minetest.register_craft ({
-    type = "shapeless",
-    output = "lavastuff:slab 4",
-    recipe = {"lavastuff:block", "lavastuff:block"}
-})
-
-minetest.register_craft ({
-    type = "shapeless",
-    output = "lavastuff:ingot 9",
-    recipe = {"lavastuff:block"}
-})
-
-minetest.register_craft ({
-    type = "shapeless",
-    output = "lavastuff:block",
-    recipe = {"lavastuff:slab", "lavastuff:slab"}
-})
+stairs.register_stair_and_slab(
+	"lava",
+	"lavastuff:block",
+	{cracky = 3},
+	{"lavastuff_block.png"},
+	"Lava Stair",
+	"Lava Slab",
+	default.node_sound_stone_defaults(),
+	true
+)
 
 --
 --Toolranks support
@@ -467,7 +414,7 @@ end
 --
 
 minetest.register_node("lavastuff:light", {
-	description = "You shouldnt be holding this",
+	description = minetest.colorize("red", "You shouldnt be holding this!!"),
 	drawtype = "airlike",
 	paramtype = "light",
 	walkable = false,
