@@ -91,13 +91,17 @@ minetest.register_tool("lavastuff:sword", {
     description = "Lava Sword",
     inventory_image = "lavastuff_sword.png",
     tool_capabilities = {
-        full_punch_interval = 0.6,
-        max_drop_level=1,
-        groupcaps={
-         snappy={times={[1]=1.90, [2]=0.90, [3]=0.30}, uses=50, maxlevel=3},
-       },
-       damage_groups = {fleshy=8},
-    },
+		full_punch_interval = 0.6,
+		max_drop_level = 1,
+		groupcaps = {
+			snappy = {
+				times = {[1] = 1.70, [2] = 0.70, [3] = 0.25},
+				uses = 50,
+				maxlevel = 3
+			},
+		},
+		damage_groups = {fleshy = 10},
+	},
     on_secondary_use = function(itemstack, user, pointed_thing)
         if lavastuff.enable_lightup == true then
             local pos = user:get_pos()
@@ -121,11 +125,15 @@ if not minetest.get_modpath("mobs_monster") then
         inventory_image = "lavastuff_pick.png",
         tool_capabilities = {
             full_punch_interval = 0.7,
-            max_drop_level=3,
+            max_drop_level = 3,
             groupcaps={
-                cracky = {times={[1]=1.80, [2]=0.80, [3]=0.40}, uses=50, maxlevel=3},
+                cracky = {
+                    times = {[1] = 1.8, [2] = 0.8, [3] = 0.40},
+                    uses = 40,
+                    maxlevel = 3
+                },
             },
-            damage_groups = {fleshy=5},
+            damage_groups = {fleshy = 6},
         },
         on_secondary_use = function(itemstack, user, pointed_thing)
             if lavastuff.enable_lightup == true then
@@ -152,11 +160,15 @@ else
         inventory_image = "lavastuff_pick.png",
         tool_capabilities = {
             full_punch_interval = 0.7,
-            max_drop_level=3,
+            max_drop_level = 3,
             groupcaps={
-                cracky = {times={[1]=1.80, [2]=0.80, [3]=0.40}, uses=50, maxlevel=3},
+                cracky = {
+                    times = {[1] = 1.8, [2] = 0.8, [3] = 0.40},
+                    uses = 40,
+                    maxlevel = 3
+                },
             },
-            damage_groups = {fleshy=5},
+            damage_groups = {fleshy = 6},
         },
     })
 end
@@ -166,13 +178,13 @@ minetest.register_tool("lavastuff:shovel", {
     inventory_image = "lavastuff_shovel.png",
     wield_image = "lavastuff_shovel.png^[transformR90",
     tool_capabilities = {
-        full_punch_interval = 0.7,
-        max_drop_level=1,
-        groupcaps={
-            crumbly = {times={[1]=1.0, [2]=0.40, [3]=0.20}, uses=50, maxlevel=3},
-        },
-        damage_groups = {fleshy=4},
-    },
+		full_punch_interval = 1.0,
+		max_drop_level=1,
+		groupcaps={
+			crumbly = {times={[1]=1.10, [2]=0.50, [3]=0.30}, uses=30, maxlevel=3},
+		},
+		damage_groups = {fleshy=4},
+	},
     sound = {breaks = "default_tool_breaks"},
 })
 
@@ -180,13 +192,17 @@ minetest.register_tool("lavastuff:axe", {
     description = "Lava Axe",
     inventory_image = "lavastuff_axe.png",
     tool_capabilities = {
-        full_punch_interval = 0.7,
-        max_drop_level=1,
-        groupcaps={
-            choppy={times={[1]=2.0, [2]=0.80, [3]=0.40}, uses=50, maxlevel=3},
-        },
-        damage_groups = {fleshy=7},
-    },
+		full_punch_interval = 0.8,
+		max_drop_level = 1,
+		groupcaps = {
+			choppy = {
+				times = {[1] = 2.00, [2] = 0.80, [3] = 0.40},
+				uses = 40,
+				maxlevel = 3
+			},
+		},
+		damage_groups = {fleshy = 7},
+	},
     sound = {breaks = "default_tool_breaks"},
 })
 
@@ -248,8 +264,8 @@ if minetest.get_modpath("3d_armor") then
     armor:register_armor("lavastuff:helmet", {
         description = "Lava Helmet",
         inventory_image = "lavastuff_inv_helmet.png",
-        groups = {armor_head=17, armor_heal=10, armor_use=100, armor_fire=10},
-        armor_groups = {fleshy=20},
+        groups = {armor_head=1, armor_heal=12, armor_use=100, armor_fire=10},
+        armor_groups = {fleshy=15},
         damage_groups = {cracky=2, snappy=1, level=3},
         wear = 0,
     })
@@ -257,7 +273,7 @@ if minetest.get_modpath("3d_armor") then
     armor:register_armor("lavastuff:chestplate", {
         description = "Lava Chestplate",
         inventory_image = "lavastuff_inv_chestplate.png",
-        groups = {armor_torso=10, armor_heal=10, armor_use=100, armor_fire=10},
+        groups = {armor_torso=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=20},
         damage_groups = {cracky=2, snappy=1, level=3},
         wear = 0,
@@ -266,7 +282,7 @@ if minetest.get_modpath("3d_armor") then
     armor:register_armor("lavastuff:leggings", {
         description = "Lava Leggings",
         inventory_image = "lavastuff_inv_leggings.png",
-        groups = {armor_legs=10, armor_heal=10, armor_use=100, armor_fire=10},
+        groups = {armor_legs=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=20},
         damage_groups = {cracky=2, snappy=1, level=3},
         wear = 0,
@@ -275,16 +291,16 @@ if minetest.get_modpath("3d_armor") then
     armor:register_armor("lavastuff:boots", {
         description = "Lava Boots",
         inventory_image = "lavastuff_inv_boots.png",
-        groups = {armor_feet=10, armor_heal=10, armor_use=100, armor_fire=10},
-        armor_groups = {fleshy=17},
-        damage_groups = {cracky=2, snappy=1, level=3},
+        groups = {armor_feet=1, armor_heal=12, armor_use=100, armor_fire=10, physics_jump=0.5, physics_speed = 1},
+        armor_groups = {fleshy=15},
+		damage_groups = {cracky=2, snappy=1, level=3},
         wear = 0,
     })
 
     armor:register_armor("lavastuff:shield", {
         description = "Lava Shield",
         inventory_image = "lavastuff_inven_shield.png",
-        groups = {armor_shield=10, armor_heal=10, armor_use=100, armor_fire=10},
+        groups = {armor_shield=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=20},
         damage_groups = {cracky=2, snappy=1, level=3},
         wear = 0,
@@ -425,7 +441,7 @@ end
 --
 
 minetest.register_node("lavastuff:light", {
-	description = minetest.colorize("red", "You shouldnt be holding this!!"),
+	description = minetest.colorize("red", "You shouldn\'t be holding this!!"),
 	drawtype = "airlike",
 	paramtype = "light",
 	walkable = false,
