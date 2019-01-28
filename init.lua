@@ -95,12 +95,12 @@ minetest.register_tool("lavastuff:sword", {
 		max_drop_level = 1,
 		groupcaps = {
 			snappy = {
-				times = {[1] = 1.70, [2] = 0.70, [3] = 0.25},
+				times = {1.7, 0.7, 0.25},
 				uses = 50,
 				maxlevel = 3
 			},
 		},
-		damage_groups = {fleshy = 10},
+		damage_groups = {fleshy = 10, burns = 1},
 	},
     on_secondary_use = function(itemstack, user, pointed_thing)
         if lavastuff.enable_lightup == true then
@@ -124,6 +124,7 @@ if not minetest.get_modpath("mobs_monster") then
         description = ("Lava Pickaxe"),
         inventory_image = "lavastuff_pick.png",
         tool_capabilities = {
+            burns = true, -- fire_plus support
             full_punch_interval = 0.7,
             max_drop_level = 3,
             groupcaps={
@@ -133,7 +134,7 @@ if not minetest.get_modpath("mobs_monster") then
                     maxlevel = 3
                 },
             },
-            damage_groups = {fleshy = 6},
+            damage_groups = {fleshy = 6, burns = 1},
         },
         on_secondary_use = function(itemstack, user, pointed_thing)
             if lavastuff.enable_lightup == true then
@@ -159,6 +160,7 @@ else
         description = ("Lava Pickaxe"),
         inventory_image = "lavastuff_pick.png",
         tool_capabilities = {
+            burns = true, -- fire_plus support
             full_punch_interval = 0.7,
             max_drop_level = 3,
             groupcaps={
@@ -168,7 +170,7 @@ else
                     maxlevel = 3
                 },
             },
-            damage_groups = {fleshy = 6},
+            damage_groups = {fleshy = 6, burns = 1},
         },
     })
 end
@@ -201,7 +203,7 @@ minetest.register_tool("lavastuff:axe", {
 				maxlevel = 3
 			},
 		},
-		damage_groups = {fleshy = 7},
+		damage_groups = {fleshy = 7, burns = 1},
 	},
     sound = {breaks = "default_tool_breaks"},
 })
