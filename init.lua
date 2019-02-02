@@ -1,12 +1,16 @@
 lavastuff = {}
 
-lavastuff.enable_lightup = true -- Lights up the area around the player that punches air with the lava sword
+lavastuff.enable_lightup = minetest.settings:get_bool("lavastuff_enable_lightup") or true
+-- Lights up the area around the player that rightclicks the air with a lava tool
+
+lavastuff.cook_limit = minetest.settings:get("lavastuff_cook_limit") or 15
+-- Tools will not smelt items if their cooking time is too long
 
 function lavastuff.burn_drops(tool)
     local old_handle_node_drops = minetest.handle_node_drops
 
     function minetest.handle_node_drops(pos, drops, digger)
-        if digger:get_wielded_item():get_name() ~= (tool) then -- are we holding Lava Pick?
+        if digger:get_wielded_item():get_name() ~= (tool) then
             return old_handle_node_drops(pos, drops, digger)
         end
 
@@ -23,7 +27,7 @@ function lavastuff.burn_drops(tool)
             })
 
             -- if we have cooked result then add to new list
-            if output and output.item and not output.item:is_empty() then
+            if output and output.item and not output.item:is_empty() and output.time <= lavastuff.cook_limit then
                 table.insert(hot_drops,
                     ItemStack({
                         name = output.item:get_name(),
@@ -36,6 +40,19 @@ function lavastuff.burn_drops(tool)
         end
 
         return old_handle_node_drops(pos, hot_drops, digger)
+    end
+end
+
+function lavastuff.lightup(user)
+    if lavastuff.enable_lightup == true then
+        local pos = user:get_pos()
+
+        pos.y = pos.y + 1
+
+        if minetest.get_node(pos).name == "air" then
+            minetest.set_node(pos, {name = "lavastuff:light"})
+            minetest.after(0.4, minetest.remove_node, pos)
+        end
     end
 end
 
@@ -103,16 +120,7 @@ minetest.register_tool("lavastuff:sword", {
 		damage_groups = {fleshy = 10, burns = 1},
 	},
     on_secondary_use = function(itemstack, user, pointed_thing)
-        if lavastuff.enable_lightup == true then
-            local pos = user:get_pos()
-
-            pos.y = pos.y + 1
-
-            if minetest.get_node(pos).name == "air" then
-                minetest.set_node(pos, {name = "lavastuff:light"})
-                minetest.after(0.4, minetest.remove_node, pos)
-            end
-        end
+        lavastuff.lightup(user)
     end,
     sound = {breaks = "default_tool_breaks"},
 })
@@ -137,16 +145,7 @@ if not minetest.get_modpath("mobs_monster") then
             damage_groups = {fleshy = 6, burns = 1},
         },
         on_secondary_use = function(itemstack, user, pointed_thing)
-            if lavastuff.enable_lightup == true then
-                local pos = user:get_pos()
-
-                pos.y = pos.y + 1
-
-                if minetest.get_node(pos).name == "air" then
-                    minetest.set_node(pos, {name = "lavastuff:light"})
-                    minetest.after(0.4, minetest.remove_node, pos)
-                end
-            end
+            lavastuff.lightup(user)
         end,
     })
 
