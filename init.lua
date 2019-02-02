@@ -6,6 +6,11 @@ lavastuff.enable_lightup = minetest.settings:get_bool("lavastuff_enable_lightup"
 lavastuff.cook_limit = minetest.settings:get("lavastuff_cook_limit") or 15
 -- Tools will not smelt items if their cooking time is too long
 
+lavastuff.blacklisted_items = { -- Items lava tools will not smelt
+    "default:mese_crystal",
+    "default:mese",
+}
+
 function lavastuff.burn_drops(tool)
     local old_handle_node_drops = minetest.handle_node_drops
 
@@ -25,6 +30,12 @@ function lavastuff.burn_drops(tool)
                 width = 1,
                 items = {drop}
             })
+
+            for _, name in pairs(lavastuff.blacklisted_items) do
+                if name == drop then
+                    return old_handle_node_drops(pos, drops, digger)
+                end
+            end
 
             -- if we have cooked result then add to new list
             if output and output.item and not output.item:is_empty() and output.time <= lavastuff.cook_limit then
