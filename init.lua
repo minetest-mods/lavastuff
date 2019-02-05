@@ -1,5 +1,7 @@
 lavastuff = {}
 
+local S = minetest.get_translator(minetest.get_current_modname())
+
 lavastuff.enable_lightup = minetest.settings:get_bool("lavastuff_enable_lightup") or true
 -- Lights up the area around the player that rightclicks the air with a lava tool
 
@@ -76,7 +78,7 @@ lavastuff.burn_drops("lavastuff:shovel")
 --
 
 minetest.register_craftitem("lavastuff:ingot", {
-    description = "Lava ingot",
+    description = S("Lava ingot"),
     inventory_image = "lavastuff_ingot.png",
 })
 
@@ -92,7 +94,7 @@ minetest.register_craft({
 
 if not minetest.get_modpath("mobs_monster") then
     minetest.register_craftitem("lavastuff:orb", {
-        description = "Lava orb",
+        description = S("Lava orb"),
         inventory_image = "zmobs_lava_orb.png"
     })
 
@@ -116,7 +118,7 @@ end
 --
 
 minetest.register_tool("lavastuff:sword", {
-    description = "Lava Sword",
+    description = S("Lava Sword"),
     inventory_image = "lavastuff_sword.png",
     tool_capabilities = {
 		full_punch_interval = 0.6,
@@ -140,7 +142,7 @@ if not minetest.get_modpath("mobs_monster") then
     minetest.register_alias("mobs:pick_lava", "lavastuff:pick")
 
     minetest.register_tool("lavastuff:pick", {
-        description = ("Lava Pickaxe"),
+        description = S("Lava Pickaxe"),
         inventory_image = "lavastuff_pick.png",
         tool_capabilities = {
             burns = true, -- fire_plus support
@@ -167,7 +169,7 @@ else
     minetest.register_alias("lavastuff:pick", "mobs:pick_lava")
 
     minetest.register_tool(":mobs:pick_lava", {
-        description = ("Lava Pickaxe"),
+        description = S("Lava Pickaxe"),
         inventory_image = "lavastuff_pick.png",
         tool_capabilities = {
             burns = true, -- fire_plus support
@@ -186,7 +188,7 @@ else
 end
 
 minetest.register_tool("lavastuff:shovel", {
-    description = "Lava Shovel",
+    description = S("Lava Shovel"),
     inventory_image = "lavastuff_shovel.png",
     wield_image = "lavastuff_shovel.png^[transformR90",
     tool_capabilities = {
@@ -201,7 +203,7 @@ minetest.register_tool("lavastuff:shovel", {
 })
 
 minetest.register_tool("lavastuff:axe", {
-    description = "Lava Axe",
+    description = S("Lava Axe"),
     inventory_image = "lavastuff_axe.png",
     tool_capabilities = {
 		full_punch_interval = 0.8,
@@ -274,7 +276,7 @@ end
 
 if minetest.get_modpath("3d_armor") then
     armor:register_armor("lavastuff:helmet", {
-        description = "Lava Helmet",
+        description = S("Lava Helmet"),
         inventory_image = "lavastuff_inv_helmet.png",
         groups = {armor_head=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=15},
@@ -283,7 +285,7 @@ if minetest.get_modpath("3d_armor") then
     })
 
     armor:register_armor("lavastuff:chestplate", {
-        description = "Lava Chestplate",
+        description = S("Lava Chestplate"),
         inventory_image = "lavastuff_inv_chestplate.png",
         groups = {armor_torso=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=20},
@@ -292,7 +294,7 @@ if minetest.get_modpath("3d_armor") then
     })
 
     armor:register_armor("lavastuff:leggings", {
-        description = "Lava Leggings",
+        description = S("Lava Leggings"),
         inventory_image = "lavastuff_inv_leggings.png",
         groups = {armor_legs=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=20},
@@ -301,7 +303,7 @@ if minetest.get_modpath("3d_armor") then
     })
 
     armor:register_armor("lavastuff:boots", {
-        description = "Lava Boots",
+        description = S("Lava Boots"),
         inventory_image = "lavastuff_inv_boots.png",
         groups = {armor_feet=1, armor_heal=12, armor_use=100, armor_fire=10, physics_jump=0.5, physics_speed = 1},
         armor_groups = {fleshy=15},
@@ -310,7 +312,7 @@ if minetest.get_modpath("3d_armor") then
     })
 
     armor:register_armor("lavastuff:shield", {
-        description = "Lava Shield",
+        description = S("Lava Shield"),
         inventory_image = "lavastuff_inven_shield.png",
         groups = {armor_shield=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=20},
@@ -374,7 +376,7 @@ end
 --
 
 minetest.register_node ("lavastuff:block", {
-    description = "Lava Block",
+    description = S("Lava Block"),
     tiles = {"lavastuff_block.png"},
     is_ground_content = false,
     sounds = default.node_sound_stone_defaults(),
@@ -403,8 +405,8 @@ if not minetest.get_modpath("moreblocks") then
         "lavastuff:block",
         {cracky = 2, level = 2},
         {"lavastuff_block.png"},
-        "Lava Stair",
-        "Lava Slab",
+        S("Lava Stair"),
+        S("Lava Slab"),
         default.node_sound_stone_defaults(),
         true
     )
@@ -424,26 +426,26 @@ end
 
 if minetest.get_modpath("toolranks") then
     minetest.override_item("lavastuff:sword", {
-        description = toolranks.create_description("Lava Sword", 0, 1),
-        original_description = "Lava Sword",
+        description = toolranks.create_description(S("Lava Sword"), 0, 1),
+        original_description = S("Lava Sword"),
         after_use = toolranks.new_afteruse
     })
 
     minetest.override_item("lavastuff:pick", {
-        description = toolranks.create_description("Lava Pickaxe", 0, 1),
-        original_description = "Lava Pickaxe",
+        description = toolranks.create_description(S("Lava Pickaxe"), 0, 1),
+        original_description = S("Lava Pickaxe"),
         after_use = toolranks.new_afteruse
     })
 
     minetest.override_item("lavastuff:axe", {
-        description = toolranks.create_description("Lava Axe", 0, 1),
-        original_description = "Lava Axe",
+        description = toolranks.create_description(S("Lava Axe"), 0, 1),
+        original_description = S("Lava Axe"),
         after_use = toolranks.new_afteruse
     })
 
     minetest.override_item("lavastuff:shovel", {
-        description = toolranks.create_description("Lava Shovel", 0, 1),
-        original_description = "Lava Shovel",
+        description = toolranks.create_description(S("Lava Shovel"), 0, 1),
+        original_description = S("Lava Shovel"),
         after_use = toolranks.new_afteruse
     })
 end
