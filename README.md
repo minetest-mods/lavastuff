@@ -1,4 +1,4 @@
-# lavastuff
+# Lavastuff
 Adds lava armor, tools, and blocks
 
 ## **API**
