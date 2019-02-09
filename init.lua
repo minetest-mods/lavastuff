@@ -2,7 +2,7 @@ lavastuff = {}
 
 local S
 
-if minetest.global_exists(minetest.get_translator) then
+if minetest.get_translator ~= nil then
     S = minetest.get_translator(minetest.get_current_modname())
 else
     S = function(str)
