@@ -6,6 +6,7 @@ Adds lava armor, tools, and blocks
 * **lavastuff.enable_tool_fire** - Enable/Disable the lava tool fire feature
 * **lavastuff.blacklisted_items** - Prevent lava tools from smelting certain nodes. See code for how to add an item to the list
 * **lavastuff.cook_limit** - Prevent lava tools from smelting dug nodes if cooktime is too high
+* **lavastuff.tool_fire_func** - The function used by lavastuff tools to place fire
 
 ## **Language support**
 *  **Spanish** - (Thanks to **runs**)
