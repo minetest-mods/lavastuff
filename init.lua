@@ -29,6 +29,28 @@ lavastuff.blacklisted_items = { -- Items lava tools will not smelt
     "default:mese",
 }
 
+if minetest.registered_items["fire:basic_flame"] and lavastuff.enable_tool_fire == true then
+    function lavastuff.tool_fire_func(itemstack, user, pointed_thing)
+        if not minetest.registered_items["fire:basic_flame"] or
+        lavastuff.enable_tool_fire == false then
+            return
+        end
+
+        local node = minetest.get_node(pointed_thing.above)
+        local pointed = {type = "node", under = pointed_thing.above, above = pointed_thing.above}
+        local _, can_place = minetest.item_place_node(ItemStack("fire:basic_flame"), user, pointed)
+
+        if node.name == "air" and can_place == true then
+            minetest.set_node(pointed_thing.above, {name = "fire:permanent_flame"})
+            minetest.after(7, function()
+                if minetest.get_node(pointed_thing.above).name == "fire:permanent_flame" then
+                    minetest.remove_node(pointed_thing.above)
+                end
+            end)
+        end
+    end
+end
+
 function lavastuff.burn_drops(tool)
     local old_handle_node_drops = minetest.handle_node_drops
 
@@ -135,25 +157,7 @@ minetest.register_tool("lavastuff:sword", {
 		},
 		damage_groups = {fleshy = 10, burns = 1},
 	},
-    on_place = function(itemstack, user, pointed_thing)
-        if not minetest.registered_items["fire:basic_flame"] or
-        lavastuff.enable_tool_fire == false then
-            return
-        end
-
-        local node = minetest.get_node(pointed_thing.above)
-        local pointed = {type = "node", under = pointed_thing.above, above = pointed_thing.above}
-        local _, can_place = minetest.item_place_node(ItemStack("fire:basic_flame"), user, pointed)
-
-        if node.name == "air" and can_place == true then
-            minetest.set_node(pointed_thing.above, {name = "fire:permanent_flame"})
-            minetest.after(7, function()
-                if minetest.get_node(pointed_thing.above).name == "fire:permanent_flame" then
-                    minetest.remove_node(pointed_thing.above)
-                end
-            end)
-        end
-    end,
+    on_place = lavastuff.tool_fire_func,
     sound = {breaks = "default_tool_breaks"},
 })
 
@@ -176,25 +180,7 @@ if not minetest.get_modpath("mobs_monster") then
             },
             damage_groups = {fleshy = 6, burns = 1},
         },
-        on_place = function(itemstack, user, pointed_thing)
-            if not minetest.registered_items["fire:basic_flame"] or
-            lavastuff.enable_tool_fire == false then
-                return
-            end
-
-            local node = minetest.get_node(pointed_thing.above)
-            local pointed = {type = "node", under = pointed_thing.above, above = pointed_thing.above}
-            local _, can_place = minetest.item_place_node(ItemStack("fire:basic_flame"), user, pointed)
-
-            if node.name == "air" and can_place == true then
-                minetest.set_node(pointed_thing.above, {name = "fire:permanent_flame"})
-                minetest.after(7, function()
-                    if minetest.get_node(pointed_thing.above).name == "fire:permanent_flame" then
-                        minetest.remove_node(pointed_thing.above)
-                    end
-                end)
-            end
-        end,
+        on_place = lavastuff.tool_fire_func,
     })
 
 -- Lava Pick (restores autosmelt functionality)
@@ -219,25 +205,7 @@ else
             },
             damage_groups = {fleshy = 6, burns = 1},
         },
-        on_place = function(itemstack, user, pointed_thing)
-            if not minetest.registered_items["fire:basic_flame"] or
-            lavastuff.enable_tool_fire == false then
-                return
-            end
-
-            local node = minetest.get_node(pointed_thing.above)
-            local pointed = {type = "node", under = pointed_thing.above, above = pointed_thing.above}
-            local _, can_place = minetest.item_place_node(ItemStack("fire:basic_flame"), user, pointed)
-
-            if node.name == "air" and can_place == true then
-                minetest.set_node(pointed_thing.above, {name = "fire:permanent_flame"})
-                minetest.after(7, function()
-                    if minetest.get_node(pointed_thing.above).name == "fire:permanent_flame" then
-                        minetest.remove_node(pointed_thing.above)
-                    end
-                end)
-            end
-        end,
+        on_place = lavastuff.tool_fire_func,
     })
 end
 
@@ -253,25 +221,7 @@ minetest.register_tool("lavastuff:shovel", {
 		},
 		damage_groups = {fleshy=4},
 	},
-    on_place = function(itemstack, user, pointed_thing)
-        if not minetest.registered_items["fire:basic_flame"] or
-        lavastuff.enable_tool_fire == false then
-            return
-        end
-
-        local node = minetest.get_node(pointed_thing.above)
-        local pointed = {type = "node", under = pointed_thing.above, above = pointed_thing.above}
-        local _, can_place = minetest.item_place_node(ItemStack("fire:basic_flame"), user, pointed)
-
-        if node.name == "air" and can_place == true then
-            minetest.set_node(pointed_thing.above, {name = "fire:permanent_flame"})
-            minetest.after(7, function()
-                if minetest.get_node(pointed_thing.above).name == "fire:permanent_flame" then
-                    minetest.remove_node(pointed_thing.above)
-                end
-            end)
-        end
-    end,
+    on_place = lavastuff.tool_fire_func,
     sound = {breaks = "default_tool_breaks"},
 })
 
@@ -290,25 +240,7 @@ minetest.register_tool("lavastuff:axe", {
 		},
 		damage_groups = {fleshy = 7, burns = 1},
 	},
-    on_place = function(itemstack, user, pointed_thing)
-        if not minetest.registered_items["fire:basic_flame"] or
-        lavastuff.enable_tool_fire == false then
-            return
-        end
-
-        local node = minetest.get_node(pointed_thing.above)
-        local pointed = {type = "node", under = pointed_thing.above, above = pointed_thing.above}
-        local _, can_place = minetest.item_place_node(ItemStack("fire:basic_flame"), user, pointed)
-
-        if node.name == "air" and can_place == true then
-            minetest.set_node(pointed_thing.above, {name = "fire:permanent_flame"})
-            minetest.after(7, function()
-                if minetest.get_node(pointed_thing.above).name == "fire:permanent_flame" then
-                    minetest.remove_node(pointed_thing.above)
-                end
-            end)
-        end
-    end,
+    on_place = lavastuff.tool_fire_func,
     sound = {breaks = "default_tool_breaks"},
 })
 
@@ -543,19 +475,40 @@ if minetest.get_modpath("toolranks") then
 end
 
 --
--- Light node
+-- Lava in a Bottle
 --
 
-minetest.register_node("lavastuff:light", {
-	description = minetest.colorize("red", "You shouldn\'t be holding this!!"),
-	drawtype = "airlike",
-	paramtype = "light",
+minetest.register_node("lavastuff:lava_in_a_bottle", {
+	description = "Lava in a Bottle",
+	drawtype = "plantlike",
+	tiles = {{
+        name = "lavastuff_lava_in_a_bottle.png",
+        animation = {
+            type = "vertical_frames",
+            aspect_w = 16,
+            aspect_h = 16,
+            length = 2.0
+        }
+    }},
+	inventory_image = "lavastuff_lava_in_a_bottle.png^[verticalframe:2:0",
+	wield_image = "lavastuff_lava_in_a_bottle.png^[verticalframe:2:0",
+    paramtype = "light",
+    light_source = minetest.LIGHT_MAX,
+	is_ground_content = false,
 	walkable = false,
-	pointable = false,
-	diggable = false,
-	buildable_to = true,
-	sunlight_propagates = true,
-	light_source = 15,
-    inventory_image = "air.png^default_mese_crystal.png",
-    groups = {not_in_creative_inventory = 1}
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.25, -0.5, -0.25, 0.25, 0.3, 0.25}
+	},
+	groups = {vessel = 1, dig_immediate = 3, attached_node = 1},
+	sounds = default.node_sound_glass_defaults(),
+})
+
+minetest.register_craft({
+    output = "lavastuff:lava_in_a_bottle",
+    recipe = {
+        {"", "bucket:bucket_lava"},
+        {"", "vessels:glass_bottle"},
+    },
+    replacements = {{"bucket:bucket_lava", "bucket:bucket_empty"}}
 })
