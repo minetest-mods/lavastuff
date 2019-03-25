@@ -493,7 +493,7 @@ minetest.register_node("lavastuff:lava_in_a_bottle", {
 	inventory_image = "lavastuff_lava_in_a_bottle.png^[verticalframe:2:0",
 	wield_image = "lavastuff_lava_in_a_bottle.png^[verticalframe:2:0",
     paramtype = "light",
-    light_source = minetest.LIGHT_MAX,
+    light_source = 8,
 	is_ground_content = false,
 	walkable = false,
 	selection_box = {
