@@ -103,7 +103,7 @@ lavastuff.burn_drops("lavastuff:shovel")
 --
 
 minetest.register_craftitem("lavastuff:ingot", {
-    description = S("Lava ingot"),
+    description = S("Lava Ingot"),
     inventory_image = "lavastuff_ingot.png",
 })
 
@@ -119,7 +119,7 @@ minetest.register_craft({
 
 if not minetest.get_modpath("mobs_monster") then
     minetest.register_craftitem("lavastuff:orb", {
-        description = S("Lava orb"),
+        description = S("Lava Orb"),
         inventory_image = "zmobs_lava_orb.png"
     })
 
@@ -405,7 +405,7 @@ minetest.register_node ("lavastuff:block", {
     is_ground_content = false,
     sounds = default.node_sound_stone_defaults(),
     groups = {cracky = 2, level = 2},
-    light_source = default.LIGHT_MAX,
+    light_source = 7,
 })
 
 minetest.register_craft({
@@ -439,7 +439,7 @@ else
         description = "Lava",
         tiles = {"lavastuff_block.png"},
         groups = {cracky = 2, level = 2},
-        light_source = default.LIGHT_MAX,
+        light_source = 7,
         sounds = default.node_sound_wood_defaults(),
     })
 end
@@ -479,7 +479,7 @@ end
 --
 
 minetest.register_node("lavastuff:lava_in_a_bottle", {
-	description = "Lava in a Bottle",
+	description = S("Lava in a Bottle"),
 	drawtype = "plantlike",
 	tiles = {{
         name = "lavastuff_lava_in_a_bottle.png",

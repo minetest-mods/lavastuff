@@ -1,6 +1,6 @@
 # textdomain: lavastuff
-Lava ingot=Lingote de lava
-Lava orb=Orbe de lava
+Lava Ingot=Lingote de lava
+Lava Orb=Orbe de lava
 Lava Sword=Espada de lava
 Lava Pickaxe=Pico de lava
 Lava Shovel=Pala de lava
@@ -13,3 +13,4 @@ Lava Shield=Escudo de lava
 Lava Block=Bloque de lava
 Lava Stair=Escalera de lava
 Lava Slab=Losa de lava
+Lava in a Bottle=Lava en un vaso
