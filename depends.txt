@@ -1,6 +1,7 @@
 default
 bucket
-stairs
+fire?
+stairs?
 mobs_monster?
 3d_armor?
 toolranks?
