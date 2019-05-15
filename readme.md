@@ -10,6 +10,8 @@ Adds lava armor, tools, and blocks
 
 ## **Language support**
 *  **Spanish** - (Thanks to **runs**)
+*  **French** - (Thanks to **Brian Gaucher**)
+* **German** - (Thanks to **xenonca**)
 
 ## **Special Features**
 *  **Tool Fire** - Places fire where the player right-clicks with a lava tool
@@ -17,5 +19,3 @@ Adds lava armor, tools, and blocks
 *  **Buurn** - If the fire_plus mod is enabled players will catch on fire when hit with a lava tool
 
 Most features can be disabled. If I don't have a setting to disable something you want to disable: Just ask!
-
-Special thanks to **ChimneySwift** for helping me with the pickaxe and perfecting some code
