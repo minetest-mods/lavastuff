@@ -109,7 +109,7 @@ minetest.register_craftitem("lavastuff:ingot", {
 
 minetest.register_craft({
     type = "shapeless",
-    output = "lavastuff:ingot",
+    output = "lavastuff:ingot 2",
     recipe = {"default:mese_crystal", "lavastuff:orb"}
 })
 
@@ -128,11 +128,11 @@ if not minetest.get_modpath("mobs_monster") then
     minetest.register_craft({
         output = "lavastuff:orb",
         recipe = {
-            {"", "bucket:bucket_lava", ""},
-            {"bucket:bucket_lava", "default:mese_crystal", "bucket:bucket_lava"},
-            {"", "bucket:bucket_lava", ""}
+            {"default:mese_crystal", "default:mese_crystal", "default:mese_crystal"},
+            {"default:mese_crystal", "bucket:bucket_lava", "default:mese_crystal"},
+            {"default:mese_crystal", "default:mese_crystal", "default:mese_crystal"}
         },
-        replacements = {{"bucket:bucket_lava", "bucket:bucket_empty 4"}}
+        replacements = {{"bucket:bucket_lava", "bucket:bucket_empty 1"}}
     })
 else
     minetest.register_alias("lavastuff:orb", "mobs:lava_orb")
