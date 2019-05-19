@@ -405,7 +405,7 @@ minetest.register_node ("lavastuff:block", {
     is_ground_content = false,
     sounds = default.node_sound_stone_defaults(),
     groups = {cracky = 2, level = 2},
-    light_source = 7,
+    light_source = 4,
 })
 
 minetest.register_craft({
@@ -439,7 +439,7 @@ else
         description = "Lava",
         tiles = {"lavastuff_block.png"},
         groups = {cracky = 2, level = 2},
-        light_source = 7,
+        light_source = 4,
         sounds = default.node_sound_wood_defaults(),
     })
 end
