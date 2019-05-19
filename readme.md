@@ -12,6 +12,7 @@ Adds lava armor, tools, and blocks
 *  **Spanish** - (Thanks to **runs**)
 *  **French** - (Thanks to **Brian Gaucher**)
 * **German** - (Thanks to **xenonca**)
+* **Italian** - (Thanks to **xenonca**)
 
 ## **Special Features**
 *  **Tool Fire** - Places fire where the player right-clicks with a lava tool
