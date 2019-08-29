@@ -15,7 +15,7 @@ Adds lava armor, tools, and blocks
 * **Italian** - (Thanks to **xenonca**)
 
 ## **Special Features**
-*  **Tool Fire** - Places fire where the player right-clicks with a lava tool
+*  **Tool Fire** - Lights flammable nodes on fire when rightclicked. If node has set on_ignite then that function will be run instead of the fire being placed
 *  **Autosmelt** - All nodes dug with a lava tool will be automatically smelted before being added to your inventory
 *  **Buurn** - If the fire_plus mod is enabled players will catch on fire when hit with a lava tool
 
