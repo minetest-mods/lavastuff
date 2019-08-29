@@ -9,7 +9,7 @@ Adds lava armor, tools, and blocks
 * **lavastuff.tool_fire_func** - The function used by lavastuff tools to place fire
 
 ## **Language support**
-*  **Spanish** - (Thanks to **runs**)
+*  **Spanish** - (Thanks to **runs** & **xenonca**)
 *  **French** - (Thanks to **Brian Gaucher**)
 * **German** - (Thanks to **xenonca**)
 * **Italian** - (Thanks to **xenonca**)
