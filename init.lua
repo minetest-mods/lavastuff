@@ -30,23 +30,21 @@ lavastuff.blacklisted_items = { -- Items lava tools will not smelt
 }
 
 if minetest.registered_items["fire:basic_flame"] and lavastuff.enable_tool_fire == true then
-    function lavastuff.tool_fire_func(itemstack, user, pointed_thing)
-        if not minetest.registered_items["fire:basic_flame"] or
-        lavastuff.enable_tool_fire == false then
-            return
-        end
+    function lavastuff.tool_fire_func(itemstack, user, pointed)
+        local name = user:get_player_name()
 
-        local node = minetest.get_node(pointed_thing.above)
-        local pointed = {type = "node", under = pointed_thing.above, above = pointed_thing.above}
-        local _, can_place = minetest.item_place_node(ItemStack("fire:basic_flame"), user, pointed)
+        if pointed.type == "node" then
+            local node_under = minetest.get_node(pointed.under).name
+            local def = minetest.registered_nodes[node_under]
 
-        if node.name == "air" and can_place == true then
-            minetest.set_node(pointed_thing.above, {name = "fire:permanent_flame"})
-            minetest.after(7, function()
-                if minetest.get_node(pointed_thing.above).name == "fire:permanent_flame" then
-                    minetest.remove_node(pointed_thing.above)
-                end
-            end)
+            if minetest.is_protected(pointed.under, name) then return end
+
+            if def.on_ignite then
+                def.on_ignite(pointed.under, user)
+            elseif minetest.get_item_group(node_under, "flammable") >= 1
+            and minetest.get_node(pointed.above).name == "air" then
+                minetest.set_node(pointed.above, {name = "fire:basic_flame"})
+            end
         end
     end
 end
