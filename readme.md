@@ -1,4 +1,7 @@
 # Lavastuff
+
+[![](https://github.com/minetest-mods/lavastuff/workflows/Check%20&%20Release/badge.svg)](https://github.com/minetest-mods/lavastuff/actions)
+
 Adds lava armor, tools, and blocks
 
 ## **API**
