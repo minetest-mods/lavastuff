@@ -397,7 +397,7 @@ end
 -- Nodes
 --
 
-minetest.register_node ("lavastuff:block", {
+minetest.register_node("lavastuff:block", {
     description = S("Lava Block"),
     tiles = {"lavastuff_block.png"},
     is_ground_content = false,
