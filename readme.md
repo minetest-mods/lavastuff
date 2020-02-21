@@ -13,7 +13,7 @@ Adds lava armor, tools, and blocks
 
 ## **Language support**
 *  **Spanish** - (Thanks to **runs** & **xenonca**)
-*  **French** - (Thanks to **Brian Gaucher**)
+*  **French** - (Thanks to **Brian Gaucher** and **louisroyer**)
 * **German** - (Thanks to **xenonca**)
 * **Italian** - (Thanks to **xenonca**)
 
