@@ -108,6 +108,7 @@ lavastuff.burn_drops("lavastuff:shovel")
 minetest.register_craftitem("lavastuff:ingot", {
     description = S("Lava Ingot"),
     inventory_image = "lavastuff_ingot.png",
+    light_source = 7, -- Texture will have a glow when dropped
 })
 
 minetest.register_craft({
@@ -123,7 +124,8 @@ minetest.register_craft({
 if not minetest.get_modpath("mobs_monster") then
     minetest.register_craftitem("lavastuff:orb", {
         description = S("Lava Orb"),
-        inventory_image = "zmobs_lava_orb.png"
+        inventory_image = "zmobs_lava_orb.png",
+        light_source = 7, -- Texture will have a glow when dropped
     })
 
     minetest.register_alias("mobs:lava_orb", "lavastuff:orb")
@@ -148,6 +150,7 @@ end
 minetest.register_tool("lavastuff:sword", {
     description = S("Lava Sword"),
     inventory_image = "lavastuff_sword.png",
+    light_source = 7, -- Texture will have a glow when dropped
     tool_capabilities = {
 		full_punch_interval = 0.6,
 		max_drop_level = 1,
@@ -170,6 +173,7 @@ if not minetest.get_modpath("mobs_monster") then
     minetest.register_tool("lavastuff:pick", {
         description = S("Lava Pickaxe"),
         inventory_image = "lavastuff_pick.png",
+        light_source = 7, -- Texture will have a glow when dropped
         tool_capabilities = {
             burns = true, -- fire_plus support
             full_punch_interval = 0.7,
@@ -195,6 +199,7 @@ else
     minetest.register_tool(":mobs:pick_lava", {
         description = S("Lava Pickaxe"),
         inventory_image = "lavastuff_pick.png",
+        light_source = 7, -- Texture will have a glow when dropped
         tool_capabilities = {
             burns = true, -- fire_plus support
             full_punch_interval = 0.7,
@@ -216,6 +221,7 @@ minetest.register_tool("lavastuff:shovel", {
     description = S("Lava Shovel"),
     inventory_image = "lavastuff_shovel.png",
     wield_image = "lavastuff_shovel.png^[transformR90",
+    light_source = 7, -- Texture will have a glow when dropped
     tool_capabilities = {
 		full_punch_interval = 1.0,
 		max_drop_level=1,
@@ -231,6 +237,7 @@ minetest.register_tool("lavastuff:shovel", {
 minetest.register_tool("lavastuff:axe", {
     description = S("Lava Axe"),
     inventory_image = "lavastuff_axe.png",
+    light_source = 7, -- Texture will have a glow when dropped
     tool_capabilities = {
 		full_punch_interval = 0.8,
 		max_drop_level = 1,
@@ -305,6 +312,7 @@ if minetest.get_modpath("3d_armor") then
     armor:register_armor("lavastuff:helmet", {
         description = S("Lava Helmet"),
         inventory_image = "lavastuff_inv_helmet.png",
+        light_source = 7, -- Texture will have a glow when dropped
         groups = {armor_head=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=15},
         damage_groups = {cracky=2, snappy=1, level=3},
@@ -314,6 +322,7 @@ if minetest.get_modpath("3d_armor") then
     armor:register_armor("lavastuff:chestplate", {
         description = S("Lava Chestplate"),
         inventory_image = "lavastuff_inv_chestplate.png",
+        light_source = 7, -- Texture will have a glow when dropped
         groups = {armor_torso=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=20},
         damage_groups = {cracky=2, snappy=1, level=3},
@@ -323,6 +332,7 @@ if minetest.get_modpath("3d_armor") then
     armor:register_armor("lavastuff:leggings", {
         description = S("Lava Leggings"),
         inventory_image = "lavastuff_inv_leggings.png",
+        light_source = 7, -- Texture will have a glow when dropped
         groups = {armor_legs=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=20},
         damage_groups = {cracky=2, snappy=1, level=3},
@@ -332,6 +342,7 @@ if minetest.get_modpath("3d_armor") then
     armor:register_armor("lavastuff:boots", {
         description = S("Lava Boots"),
         inventory_image = "lavastuff_inv_boots.png",
+        light_source = 7, -- Texture will have a glow when dropped
         groups = {armor_feet=1, armor_heal=12, armor_use=100, armor_fire=10, physics_jump=0.5, physics_speed = 1},
         armor_groups = {fleshy=15},
 		damage_groups = {cracky=2, snappy=1, level=3},
@@ -341,6 +352,7 @@ if minetest.get_modpath("3d_armor") then
     armor:register_armor("lavastuff:shield", {
         description = S("Lava Shield"),
         inventory_image = "lavastuff_inven_shield.png",
+        light_source = 7, -- Texture will have a glow when dropped
         groups = {armor_shield=1, armor_heal=12, armor_use=100, armor_fire=10},
         armor_groups = {fleshy=20},
         damage_groups = {cracky=2, snappy=1, level=3},
