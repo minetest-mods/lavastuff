@@ -34,8 +34,13 @@ if minetest.registered_items["fire:basic_flame"] and lavastuff.enable_tool_fire 
         local name = user:get_player_name()
 
         if pointed.type == "node" then
-            local node_under = minetest.get_node(pointed.under).name
+            local node = minetest.get_node(pointed.under)
+            local node_under = node.name
             local def = minetest.registered_nodes[node_under]
+
+            if def.on_rightclick then
+                return def.on_rightclick(pointed.under, node, user, itemstack, pointed)
+            end
 
             if minetest.is_protected(pointed.under, name) then return end
 
