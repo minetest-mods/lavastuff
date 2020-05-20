@@ -400,7 +400,7 @@ if minetest.get_modpath("moreblocks") then
 		tiles = {"lavastuff_block.png"},
 		groups = {cracky = 2, level = 2},
 		light_source = 4,
-		sounds = default and default.node_sound_wood_defaults(),
+		sounds = default and default.node_sound_stone_defaults(),
 	})
 end
 
