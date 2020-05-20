@@ -29,7 +29,17 @@ lavastuff.blacklisted_items = { -- Items lava tools will not smelt
 	"default:mese",
 }
 
-if minetest.registered_items["fire:basic_flame"] and lavastuff.enable_tool_fire == true then
+local fire_node
+
+if minetest.get_modpath("fire") then
+	fire_node = "fire:basic_flame"
+elseif minetest.get_modpath("mcl_fire") then
+	fire_node = "mcl_fire:fire"
+elseif minetest.get_modpath("nc_fire") then
+	fire_node = "nc_fire:fire"
+end
+
+if minetest.registered_items[fire_node] and lavastuff.enable_tool_fire == true then
 	function lavastuff.tool_fire_func(itemstack, user, pointed)
 		local name = user:get_player_name()
 
@@ -48,7 +58,7 @@ if minetest.registered_items["fire:basic_flame"] and lavastuff.enable_tool_fire 
 				def.on_ignite(pointed.under, user)
 			elseif minetest.get_item_group(node_under, "flammable") >= 1
 			and minetest.get_node(pointed.above).name == "air" then
-				minetest.set_node(pointed.above, {name = "fire:basic_flame"})
+				minetest.set_node(pointed.above, {name = fire_node})
 			end
 		end
 	end
@@ -58,7 +68,7 @@ function lavastuff.burn_drops(tool)
 	local old_handle_node_drops = minetest.handle_node_drops
 
 	function minetest.handle_node_drops(pos, drops, digger)
-		if digger:get_wielded_item():get_name() ~= (tool) then
+		if type(digger) == "userdata" and digger:get_wielded_item():get_name() ~= (tool) then
 			return old_handle_node_drops(pos, drops, digger)
 		end
 
@@ -102,7 +112,7 @@ lavastuff.burn_drops("lavastuff:axe")
 lavastuff.burn_drops("lavastuff:shovel")
 
 --
--- Crafitems
+-- Crafitem
 --
 
 minetest.register_craftitem("lavastuff:ingot", {
@@ -111,14 +121,8 @@ minetest.register_craftitem("lavastuff:ingot", {
 	light_source = 7, -- Texture will have a glow when dropped
 })
 
-minetest.register_craft({
-	type = "shapeless",
-	output = "lavastuff:ingot 2",
-	recipe = {"default:mese_crystal", "lavastuff:orb"}
-})
-
 --
--- Crafitem Crafts
+-- Orb compat and registration
 --
 
 if not minetest.get_modpath("mobs_monster") then
@@ -129,16 +133,6 @@ if not minetest.get_modpath("mobs_monster") then
 	})
 
 	minetest.register_alias("mobs:lava_orb", "lavastuff:orb")
-
-	minetest.register_craft({
-		output = "lavastuff:orb",
-		recipe = {
-			{"default:mese_crystal", "default:mese_crystal", "default:mese_crystal"},
-			{"default:mese_crystal", "bucket:bucket_lava", "default:mese_crystal"},
-			{"default:mese_crystal", "default:mese_crystal", "default:mese_crystal"}
-		},
-		replacements = {{"bucket:bucket_lava", "bucket:bucket_empty 1"}}
-	})
 else
 	minetest.register_alias("lavastuff:orb", "mobs:lava_orb")
 end
@@ -257,42 +251,6 @@ minetest.register_tool("lavastuff:axe", {
 --
 -- Tool Crafts
 --
-
-minetest.register_craft({
-	output = "lavastuff:sword",
-	recipe = {
-		{"lavastuff:ingot"},
-		{"lavastuff:ingot"},
-		{"default:obsidian_shard"},
-	}
-})
-
-minetest.register_craft({
-	output = "lavastuff:pick",
-	recipe = {
-		{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
-		{"", "default:obsidian_shard", ""},
-		{"", "default:obsidian_shard", ""},
-	}
-})
-
-minetest.register_craft({
-	output = "lavastuff:shovel",
-	recipe = {
-		{"lavastuff:ingot"},
-		{"default:obsidian_shard"},
-		{"default:obsidian_shard"},
-	}
-})
-
-minetest.register_craft({
-	output = "lavastuff:axe",
-	recipe = {
-		{"lavastuff:ingot", "lavastuff:ingot", ""},
-		{"lavastuff:ingot", "default:obsidian_shard", ""},
-		{"", "default:obsidian_shard", ""},
-	}
-})
 
 if minetest.get_modpath("mobs_monster") then
 	minetest.clear_craft({
@@ -418,27 +376,12 @@ minetest.register_node("lavastuff:block", {
 	description = S("Lava Block"),
 	tiles = {"lavastuff_block.png"},
 	is_ground_content = false,
-	sounds = default.node_sound_stone_defaults(),
+	sounds = default and default.node_sound_stone_defaults(),
 	groups = {cracky = 2, level = 2},
 	light_source = 4,
 })
 
-minetest.register_craft({
-	type = "shapeless",
-	output = "lavastuff:ingot 9",
-	recipe = {"lavastuff:block"}
-})
-
-minetest.register_craft({
-	output = "lavastuff:block",
-	recipe = {
-		{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
-		{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
-		{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
-	}
-})
-
-if not minetest.get_modpath("moreblocks") then
+if not minetest.get_modpath("moreblocks") and minetest.get_modpath("stairs") then
 	stairs.register_stair_and_slab(
 		"lava",
 		"lavastuff:block",
@@ -449,13 +392,15 @@ if not minetest.get_modpath("moreblocks") then
 		default.node_sound_stone_defaults(),
 		true
 	)
-else
+end
+
+if minetest.get_modpath("moreblocks") then
 	stairsplus:register_all("lavastuff", "lava", "lavastuff:ingot", {
 		description = "Lava",
 		tiles = {"lavastuff_block.png"},
 		groups = {cracky = 2, level = 2},
 		light_source = 4,
-		sounds = default.node_sound_wood_defaults(),
+		sounds = default and default.node_sound_wood_defaults(),
 	})
 end
 
@@ -516,14 +461,13 @@ minetest.register_node("lavastuff:lava_in_a_bottle", {
 		fixed = {-0.25, -0.5, -0.25, 0.25, 0.3, 0.25}
 	},
 	groups = {vessel = 1, dig_immediate = 3, attached_node = 1},
-	sounds = default.node_sound_glass_defaults(),
+	sounds = default and default.node_sound_glass_defaults(),
 })
 
-minetest.register_craft({
-	output = "lavastuff:lava_in_a_bottle",
-	recipe = {
-		{"", "bucket:bucket_lava"},
-		{"", "vessels:glass_bottle"},
-	},
-	replacements = {{"bucket:bucket_lava", "bucket:bucket_empty"}}
-})
+--
+-- Register crafts based on current game
+--
+
+if minetest.get_modpath("default") and minetest.get_modpath("bucket") and minetest.get_modpath("vessels") then
+	dofile(minetest.get_modpath("lavastuff") .. "/compat/mtg.lua")
+end
