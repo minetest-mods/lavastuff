@@ -2,20 +2,27 @@ unused_args = false
 max_line_length = 999
 
 globals = {
-    "minetest", "lavastuff",
+	"minetest", "lavastuff",
 }
 
 read_globals = {
-    string = {fields = {"split"}},
-    table = {fields = {"copy", "getn"}},
+	string = {fields = {"split"}},
+	table = {fields = {"copy", "getn"}},
 
-    -- Builtin
-    "vector", "ItemStack",
-    "dump", "DIR_DELIM", "VoxelArea", "Settings",
+	-- Builtin
+	"vector", "ItemStack",
+	"dump", "DIR_DELIM", "VoxelArea", "Settings",
 
-    -- MTG
-    "default", "sfinv", "creative", "stairs",
+	-- MTG
+	"default", "sfinv", "creative", "stairs",
 
-    -- Other mods
-    "armor", "stairsplus", "toolranks",
+	-- MC2
+	"mcl_sounds",
+
+	-- Other mods
+	"armor", "stairsplus", "toolranks",
+}
+
+exclude_files = {
+	".luacheckrc",
 }

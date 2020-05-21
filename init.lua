@@ -119,6 +119,7 @@ minetest.register_craftitem("lavastuff:ingot", {
 	description = S("Lava Ingot"),
 	inventory_image = "lavastuff_ingot.png",
 	light_source = 7, -- Texture will have a glow when dropped
+	groups = {craftitem = 1},
 })
 
 --
@@ -130,6 +131,7 @@ if not minetest.get_modpath("mobs_monster") then
 		description = S("Lava Orb"),
 		inventory_image = "zmobs_lava_orb.png",
 		light_source = 7, -- Texture will have a glow when dropped
+		groups = {craftitem = 1},
 	})
 
 	minetest.register_alias("mobs:lava_orb", "lavastuff:orb")
@@ -138,191 +140,10 @@ else
 end
 
 --
--- Tools
---
-
-minetest.register_tool("lavastuff:sword", {
-	description = S("Lava Sword"),
-	inventory_image = "lavastuff_sword.png",
-	light_source = 7, -- Texture will have a glow when dropped
-	tool_capabilities = {
-		full_punch_interval = 0.6,
-		max_drop_level = 1,
-		groupcaps = {
-			snappy = {
-				times = {1.7, 0.7, 0.25},
-				uses = 50,
-				maxlevel = 3
-			},
-		},
-		damage_groups = {fleshy = 10, burns = 1},
-	},
-	on_place = lavastuff.tool_fire_func,
-	sound = {breaks = "default_tool_breaks"},
-})
-
-if not minetest.get_modpath("mobs_monster") then
-	minetest.register_alias("mobs:pick_lava", "lavastuff:pick")
-
-	minetest.register_tool("lavastuff:pick", {
-		description = S("Lava Pickaxe"),
-		inventory_image = "lavastuff_pick.png",
-		light_source = 7, -- Texture will have a glow when dropped
-		tool_capabilities = {
-			burns = true, -- fire_plus support
-			full_punch_interval = 0.7,
-			max_drop_level = 3,
-			groupcaps={
-				cracky = {
-					times = {[1] = 1.8, [2] = 0.8, [3] = 0.40},
-					uses = 40,
-					maxlevel = 3
-				},
-			},
-			damage_groups = {fleshy = 6, burns = 1},
-		},
-		on_place = lavastuff.tool_fire_func,
-	})
-
--- Lava Pick (restores autosmelt functionality)
-
-	lavastuff.burn_drops("lavastuff:pick")
-else
-	minetest.register_alias("lavastuff:pick", "mobs:pick_lava")
-
-	minetest.register_tool(":mobs:pick_lava", {
-		description = S("Lava Pickaxe"),
-		inventory_image = "lavastuff_pick.png",
-		light_source = 7, -- Texture will have a glow when dropped
-		tool_capabilities = {
-			burns = true, -- fire_plus support
-			full_punch_interval = 0.7,
-			max_drop_level = 3,
-			groupcaps={
-				cracky = {
-					times = {[1] = 1.8, [2] = 0.8, [3] = 0.40},
-					uses = 40,
-					maxlevel = 3
-				},
-			},
-			damage_groups = {fleshy = 6, burns = 1},
-		},
-		on_place = lavastuff.tool_fire_func,
-	})
-end
-
-minetest.register_tool("lavastuff:shovel", {
-	description = S("Lava Shovel"),
-	inventory_image = "lavastuff_shovel.png",
-	wield_image = "lavastuff_shovel.png^[transformR90",
-	light_source = 7, -- Texture will have a glow when dropped
-	tool_capabilities = {
-		full_punch_interval = 1.0,
-		max_drop_level=1,
-		groupcaps={
-			crumbly = {times={[1]=1.10, [2]=0.50, [3]=0.30}, uses=30, maxlevel=3},
-		},
-		damage_groups = {fleshy=4},
-	},
-	on_place = lavastuff.tool_fire_func,
-	sound = {breaks = "default_tool_breaks"},
-})
-
-minetest.register_tool("lavastuff:axe", {
-	description = S("Lava Axe"),
-	inventory_image = "lavastuff_axe.png",
-	light_source = 7, -- Texture will have a glow when dropped
-	tool_capabilities = {
-		full_punch_interval = 0.8,
-		max_drop_level = 1,
-		groupcaps = {
-			choppy = {
-				times = {[1] = 2.00, [2] = 0.80, [3] = 0.40},
-				uses = 40,
-				maxlevel = 3
-			},
-		},
-		damage_groups = {fleshy = 7, burns = 1},
-	},
-	on_place = lavastuff.tool_fire_func,
-	sound = {breaks = "default_tool_breaks"},
-})
-
---
--- Tool Crafts
---
-
-if minetest.get_modpath("mobs_monster") then
-	minetest.clear_craft({
-		recipe = {
-			{"mobs:lava_orb", "mobs:lava_orb", "mobs:lava_orb"},
-			{"", "default:obsidian_shard", ""},
-			{"", "default:obsidian_shard", ""},
-		}
-	})
-end
-
---
--- Armor
---
-
-if minetest.get_modpath("3d_armor") then
-	armor:register_armor("lavastuff:helmet", {
-		description = S("Lava Helmet"),
-		inventory_image = "lavastuff_inv_helmet.png",
-		light_source = 7, -- Texture will have a glow when dropped
-		groups = {armor_head=1, armor_heal=12, armor_use=100, armor_fire=10},
-		armor_groups = {fleshy=15},
-		damage_groups = {cracky=2, snappy=1, level=3},
-		wear = 0,
-	})
-
-	armor:register_armor("lavastuff:chestplate", {
-		description = S("Lava Chestplate"),
-		inventory_image = "lavastuff_inv_chestplate.png",
-		light_source = 7, -- Texture will have a glow when dropped
-		groups = {armor_torso=1, armor_heal=12, armor_use=100, armor_fire=10},
-		armor_groups = {fleshy=20},
-		damage_groups = {cracky=2, snappy=1, level=3},
-		wear = 0,
-	})
-
-	armor:register_armor("lavastuff:leggings", {
-		description = S("Lava Leggings"),
-		inventory_image = "lavastuff_inv_leggings.png",
-		light_source = 7, -- Texture will have a glow when dropped
-		groups = {armor_legs=1, armor_heal=12, armor_use=100, armor_fire=10},
-		armor_groups = {fleshy=20},
-		damage_groups = {cracky=2, snappy=1, level=3},
-		wear = 0,
-	})
-
-	armor:register_armor("lavastuff:boots", {
-		description = S("Lava Boots"),
-		inventory_image = "lavastuff_inv_boots.png",
-		light_source = 7, -- Texture will have a glow when dropped
-		groups = {armor_feet=1, armor_heal=12, armor_use=100, armor_fire=10, physics_jump=0.5, physics_speed = 1},
-		armor_groups = {fleshy=15},
-		damage_groups = {cracky=2, snappy=1, level=3},
-		wear = 0,
-	})
-
-	armor:register_armor("lavastuff:shield", {
-		description = S("Lava Shield"),
-		inventory_image = "lavastuff_inven_shield.png",
-		light_source = 7, -- Texture will have a glow when dropped
-		groups = {armor_shield=1, armor_heal=12, armor_use=100, armor_fire=10},
-		armor_groups = {fleshy=20},
-		damage_groups = {cracky=2, snappy=1, level=3},
-		wear = 0,
-	})
-end
-
---
 -- Armor Crafts
 --
 
-if minetest.get_modpath("3d_armor") then
+if minetest.get_modpath("3d_armor") or minetest.get_modpath("mcl_armor") then
 	minetest.register_craft({
 		output = "lavastuff:helmet",
 		recipe = {
@@ -358,12 +179,144 @@ if minetest.get_modpath("3d_armor") then
 		}
 	})
 
-	minetest.register_craft({
-		output = "lavastuff:shield",
+	if not minetest.get_modpath("mcl_armor") then
+		minetest.register_craft({
+			output = "lavastuff:shield",
+			recipe = {
+				{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+				{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
+				{"", "lavastuff:ingot", ""},
+			}
+		})
+	end
+end
+
+--
+-- Tools
+--
+
+minetest.register_tool("lavastuff:sword", {
+	description = S("Lava Sword"),
+	inventory_image = "lavastuff_sword.png",
+	groups = {weapon = 1, sword = 1},
+	light_source = 7, -- Texture will have a glow when dropped
+	tool_capabilities = {
+		full_punch_interval = 0.6,
+		max_drop_level = 1,
+		groupcaps = {
+			snappy = {
+				times = {1.7, 0.7, 0.25},
+				uses = 50,
+				maxlevel = 3
+			},
+		},
+		damage_groups = {fleshy = 10, burns = 1},
+	},
+	on_place = lavastuff.tool_fire_func,
+	sound = {breaks = "default_tool_breaks"},
+})
+
+if not minetest.get_modpath("mobs_monster") then
+	minetest.register_alias("mobs:pick_lava", "lavastuff:pick")
+
+	minetest.register_tool("lavastuff:pick", {
+		description = S("Lava Pickaxe"),
+		inventory_image = "lavastuff_pick.png",
+		groups = {tool = 1, pickaxe = 1},
+		light_source = 7, -- Texture will have a glow when dropped
+		tool_capabilities = {
+			burns = true, -- fire_plus support
+			full_punch_interval = 0.7,
+			max_drop_level = 3,
+			groupcaps={
+				cracky = {
+					times = {[1] = 1.8, [2] = 0.8, [3] = 0.40},
+					uses = 40,
+					maxlevel = 3
+				},
+			},
+			damage_groups = {fleshy = 6, burns = 1},
+		},
+		on_place = lavastuff.tool_fire_func,
+	})
+
+-- Lava Pick (restores autosmelt functionality)
+
+	lavastuff.burn_drops("lavastuff:pick")
+else
+	minetest.register_alias("lavastuff:pick", "mobs:pick_lava")
+
+	minetest.register_tool(":mobs:pick_lava", {
+		description = S("Lava Pickaxe"),
+		inventory_image = "lavastuff_pick.png",
+		groups = {tool = 1, pickaxe = 1},
+		light_source = 7, -- Texture will have a glow when dropped
+		tool_capabilities = {
+			burns = true, -- fire_plus support
+			full_punch_interval = 0.7,
+			max_drop_level = 3,
+			groupcaps={
+				cracky = {
+					times = {[1] = 1.8, [2] = 0.8, [3] = 0.40},
+					uses = 40,
+					maxlevel = 3
+				},
+			},
+			damage_groups = {fleshy = 6, burns = 1},
+		},
+		on_place = lavastuff.tool_fire_func,
+	})
+end
+
+minetest.register_tool("lavastuff:shovel", {
+	description = S("Lava Shovel"),
+	inventory_image = "lavastuff_shovel.png",
+	wield_image = "lavastuff_shovel.png^[transformR90",
+	groups = {tool = 1, shovel = 1},
+	light_source = 7, -- Texture will have a glow when dropped
+	tool_capabilities = {
+		full_punch_interval = 1.0,
+		max_drop_level=1,
+		groupcaps={
+			crumbly = {times={[1]=1.10, [2]=0.50, [3]=0.30}, uses=30, maxlevel=3},
+		},
+		damage_groups = {fleshy=4},
+	},
+	on_place = lavastuff.tool_fire_func,
+	sound = {breaks = "default_tool_breaks"},
+})
+
+minetest.register_tool("lavastuff:axe", {
+	description = S("Lava Axe"),
+	inventory_image = "lavastuff_axe.png",
+	groups = {tool = 1, axe = 1},
+	light_source = 7, -- Texture will have a glow when dropped
+	tool_capabilities = {
+		full_punch_interval = 0.8,
+		max_drop_level = 1,
+		groupcaps = {
+			choppy = {
+				times = {[1] = 2.00, [2] = 0.80, [3] = 0.40},
+				uses = 40,
+				maxlevel = 3
+			},
+		},
+		damage_groups = {fleshy = 7, burns = 1},
+	},
+	on_place = lavastuff.tool_fire_func,
+	sound = {breaks = "default_tool_breaks"},
+})
+
+--
+-- Tool Craft
+--
+
+if minetest.get_modpath("mobs_monster") then
+	minetest.clear_craft({
 		recipe = {
-			{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
-			{"lavastuff:ingot", "lavastuff:ingot", "lavastuff:ingot"},
-			{"", "lavastuff:ingot", ""},
+			{"mobs:lava_orb", "mobs:lava_orb", "mobs:lava_orb"},
+			{"", "default:obsidian_shard", ""},
+			{"", "default:obsidian_shard", ""},
 		}
 	})
 end
@@ -470,4 +423,6 @@ minetest.register_node("lavastuff:lava_in_a_bottle", {
 
 if minetest.get_modpath("default") and minetest.get_modpath("bucket") and minetest.get_modpath("vessels") then
 	dofile(minetest.get_modpath("lavastuff") .. "/compat/mtg.lua")
+elseif minetest.get_modpath("mcl_core") then
+	dofile(minetest.get_modpath("lavastuff") .. "/compat/mcl2.lua")
 end

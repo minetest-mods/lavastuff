@@ -7,5 +7,12 @@ mobs_monster?
 toolranks?
 moreblocks?
 vessels?
-mc_fire?
 nc_fire?
+mcl_armor?
+mcl_fire?
+mcl_buckets?
+mcl_nether?
+mcl_potions?
+mcl_core?
+mcl_mobitems?
+mcl_tools?
