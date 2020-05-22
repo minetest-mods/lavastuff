@@ -68,7 +68,7 @@ function lavastuff.burn_drops(tool)
 	local old_handle_node_drops = minetest.handle_node_drops
 
 	function minetest.handle_node_drops(pos, drops, digger)
-		if type(digger) == "userdata" and digger:get_wielded_item():get_name() ~= (tool) then
+		if not digger or digger:get_wielded_item():get_name() ~= (tool) then
 			return old_handle_node_drops(pos, drops, digger)
 		end
 
