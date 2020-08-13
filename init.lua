@@ -67,9 +67,9 @@ end
 function lavastuff.burn_drops(tool)
 	local old_handle_node_drops = minetest.handle_node_drops
 
-	function minetest.handle_node_drops(pos, drops, digger)
+	function minetest.handle_node_drops(pos, drops, digger, ...)
 		if not digger or digger:get_wielded_item():get_name() ~= (tool) then
-			return old_handle_node_drops(pos, drops, digger)
+			return old_handle_node_drops(pos, drops, digger, ...)
 		end
 
 		-- reset new smelted drops
@@ -86,7 +86,7 @@ function lavastuff.burn_drops(tool)
 
 			for _, name in pairs(lavastuff.blacklisted_items) do
 				if name == drop then
-					return old_handle_node_drops(pos, drops, digger)
+					return old_handle_node_drops(pos, drops, digger, ...)
 				end
 			end
 
@@ -103,7 +103,7 @@ function lavastuff.burn_drops(tool)
 			end
 		end
 
-		return old_handle_node_drops(pos, hot_drops, digger)
+		return old_handle_node_drops(pos, hot_drops, digger, ...)
 	end
 end
 
