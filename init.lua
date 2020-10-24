@@ -343,7 +343,9 @@ if not minetest.get_modpath("moreblocks") and minetest.get_modpath("stairs") the
 		S("Lava Stair"),
 		S("Lava Slab"),
 		default.node_sound_stone_defaults(),
-		true
+		true,
+		S("Inner Lava Stair"),
+		S("Outer Lava Stair")
 	)
 end
 
