@@ -2,7 +2,7 @@ unused_args = false
 max_line_length = 999
 
 globals = {
-	"minetest", "lavastuff",
+	"minetest", "lavastuff", "armor",
 }
 
 read_globals = {
@@ -20,7 +20,7 @@ read_globals = {
 	"mcl_sounds",
 
 	-- Other mods
-	"armor", "stairsplus", "toolranks",
+	"stairsplus", "toolranks",
 }
 
 exclude_files = {
