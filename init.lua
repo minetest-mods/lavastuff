@@ -329,12 +329,20 @@ minetest.register_node("lavastuff:block", {
 	description = S("Lava Block"),
 	tiles = {"lavastuff_block.png"},
 	is_ground_content = false,
-	sounds = default and default.node_sound_stone_defaults(),
+	sounds = default and default.node_sound_glass_defaults(),
 	groups = {cracky = 2, level = 2},
-	light_source = 4,
+	light_source = 6,
 })
 
-if not minetest.get_modpath("moreblocks") and minetest.get_modpath("stairs") then
+if minetest.get_modpath("moreblocks") then
+	stairsplus:register_all("lavastuff", "lava", "lavastuff:ingot", {
+		description = "Lava",
+		tiles = {"lavastuff_block.png"},
+		groups = {cracky = 2, level = 2},
+		light_source = 6,
+		sounds = default and default.node_sound_glass_defaults(),
+	})
+elseif minetest.get_modpath("stairs") then
 	stairs.register_stair_and_slab(
 		"lava",
 		"lavastuff:block",
@@ -342,21 +350,11 @@ if not minetest.get_modpath("moreblocks") and minetest.get_modpath("stairs") the
 		{"lavastuff_block.png"},
 		S("Lava Stair"),
 		S("Lava Slab"),
-		default.node_sound_stone_defaults(),
+		default.node_sound_glass_defaults(),
 		true,
 		S("Inner Lava Stair"),
 		S("Outer Lava Stair")
 	)
-end
-
-if minetest.get_modpath("moreblocks") then
-	stairsplus:register_all("lavastuff", "lava", "lavastuff:ingot", {
-		description = "Lava",
-		tiles = {"lavastuff_block.png"},
-		groups = {cracky = 2, level = 2},
-		light_source = 4,
-		sounds = default and default.node_sound_stone_defaults(),
-	})
 end
 
 --
