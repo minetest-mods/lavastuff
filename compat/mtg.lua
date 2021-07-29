@@ -4,7 +4,10 @@ local S = minetest.get_translator(minetest.get_current_modname())
 --
 
 if minetest.get_modpath("3d_armor") then
-	armor:register_armor("lavastuff:helmet", {
+	armor.materials.lava = "lavastuff:ingot"
+	armor.config.material_lava = true
+
+	armor:register_armor("lavastuff:helmet_lava", {
 		description = S("Lava Helmet"),
 		inventory_image = "lavastuff_inv_helmet.png",
 		light_source = 7, -- Texture will have a glow when dropped
@@ -13,8 +16,9 @@ if minetest.get_modpath("3d_armor") then
 		damage_groups = {cracky=2, snappy=1, level=3},
 		wear = 0,
 	})
+	minetest.register_alias("lavastuff:helmet", "lavastuff:helmet_lava")
 
-	armor:register_armor("lavastuff:chestplate", {
+	armor:register_armor("lavastuff:chestplate_lava", {
 		description = S("Lava Chestplate"),
 		inventory_image = "lavastuff_inv_chestplate.png",
 		light_source = 7, -- Texture will have a glow when dropped
@@ -23,8 +27,9 @@ if minetest.get_modpath("3d_armor") then
 		damage_groups = {cracky=2, snappy=1, level=3},
 		wear = 0,
 	})
+	minetest.register_alias("lavastuff:chestplate", "lavastuff:chestplate_lava")
 
-	armor:register_armor("lavastuff:leggings", {
+	armor:register_armor("lavastuff:leggings_lava", {
 		description = S("Lava Leggings"),
 		inventory_image = "lavastuff_inv_leggings.png",
 		light_source = 7, -- Texture will have a glow when dropped
@@ -33,8 +38,9 @@ if minetest.get_modpath("3d_armor") then
 		damage_groups = {cracky=2, snappy=1, level=3},
 		wear = 0,
 	})
+	minetest.register_alias("lavastuff:leggings", "lavastuff:leggings_lava")
 
-	armor:register_armor("lavastuff:boots", {
+	armor:register_armor("lavastuff:boots_lava", {
 		description = S("Lava Boots"),
 		inventory_image = "lavastuff_inv_boots.png",
 		light_source = 7, -- Texture will have a glow when dropped
@@ -43,16 +49,20 @@ if minetest.get_modpath("3d_armor") then
 		damage_groups = {cracky=2, snappy=1, level=3},
 		wear = 0,
 	})
+	minetest.register_alias("lavastuff:boots", "lavastuff:boots_lava")
 
-	armor:register_armor("lavastuff:shield", {
-		description = S("Lava Shield"),
-		inventory_image = "lavastuff_inven_shield.png",
-		light_source = 7, -- Texture will have a glow when dropped
-		groups = {armor_shield=1, armor_heal=12, armor_use=100, armor_fire=10},
-		armor_groups = {fleshy=20},
-		damage_groups = {cracky=2, snappy=1, level=3},
-		wear = 0,
-	})
+	if minetest.get_modpath("shields") then
+		armor:register_armor("lavastuff:shield_lava", {
+			description = S("Lava Shield"),
+			inventory_image = "lavastuff_inven_shield.png",
+			light_source = 7, -- Texture will have a glow when dropped
+			groups = {armor_shield=1, armor_heal=12, armor_use=100, armor_fire=10},
+			armor_groups = {fleshy=20},
+			damage_groups = {cracky=2, snappy=1, level=3},
+			wear = 0,
+		})
+		minetest.register_alias("lavastuff:shield", "lavastuff:shield_lava")
+	end
 end
 
 --
