@@ -1,4 +1,12 @@
-local S = minetest.get_translator(minetest.get_current_modname())
+local S
+
+if minetest.get_translator ~= nil then
+	S = minetest.get_translator(minetest.get_current_modname())
+else
+	S = function(str)
+		return(str)
+	end
+end
 
 -- Armor
 --
