@@ -1,4 +1,12 @@
-local S = minetest.get_translator(minetest.get_current_modname())
+local S
+
+if minetest.get_translator ~= nil then
+	S = minetest.get_translator(minetest.get_current_modname())
+else
+	S = function(str)
+		return(str)
+	end
+end
 
 for _, item in pairs({"lavastuff:sword", "lavastuff:pick", "lavastuff:axe", "lavastuff:shovel"}) do
 	local itype = item:sub(item:find(":")+1)
