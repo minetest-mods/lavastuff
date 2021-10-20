@@ -1,4 +1,16 @@
-local S = minetest.get_translator(minetest.get_current_modname())
+local S
+if minetest.get_translator ~= nil then
+	S = minetest.get_translator(minetest.get_current_modname())
+else
+	-- mock the translator function for MT 0.4
+	S = function(str, ...)
+		local args={...}
+		return str:gsub(
+			"@%d+",
+			function(match) return args[tonumber(match:sub(2))] end
+		)
+	end
+end
 
 -- Armor
 --

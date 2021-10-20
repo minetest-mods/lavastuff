@@ -5,8 +5,12 @@ local S
 if minetest.get_translator ~= nil then
 	S = minetest.get_translator(minetest.get_current_modname())
 else
-	S = function(str)
-		return(str)
+	S = function(str, ...)
+		local args={...}
+			return str:gsub(
+				"@%d+", 
+				function(match) return args[tonumber(match:sub(2))] end
+			)
 	end
 end
 
