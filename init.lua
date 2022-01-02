@@ -1,5 +1,8 @@
 lavastuff = {}
 
+local MODPATH = minetest.get_modpath("lavastuff")
+
+local COOLDOWN = dofile(MODPATH.."/cooldowns.lua")
 local S
 
 if minetest.get_translator ~= nil then
@@ -29,24 +32,43 @@ lavastuff.blacklisted_items = { -- Items lava tools will not smelt
 	"default:mese",
 }
 
-local fire_node
-
-if minetest.get_modpath("fire") then
-	fire_node = "fire:basic_flame"
-elseif minetest.get_modpath("mcl_fire") then
-	fire_node = "mcl_fire:fire"
-elseif minetest.get_modpath("nc_fire") then
-	fire_node = "nc_fire:fire"
+if minetest.get_modpath("default") then
+	lavastuff.game = "minetest_game"
+elseif minetest.get_modpath("mcl_core") then
+	lavastuff.game = "mineclone"
+elseif minetest.get_modpath("nc_api") then
+	lavastuff.game = "nodecore"
 end
 
-if minetest.registered_items[fire_node] and lavastuff.enable_tool_fire == true then
+if minetest.get_modpath("fire") then
+	lavastuff.fire_node = "fire:basic_flame"
+elseif minetest.get_modpath("mcl_fire") then
+	lavastuff.fire_node = "mcl_fire:fire"
+elseif minetest.get_modpath("nc_fire") then
+	lavastuff.fire_node = "nc_fire:fire"
+end
+
+if lavastuff.enable_tool_fire == true then
+	local function activate_func(user, pointedname, pointeddef, pointed)
+		if pointeddef.on_ignite then
+			pointeddef.on_ignite(pointed.under, user)
+		elseif lavastuff.fire_node and minetest.registered_nodes[lavastuff.fire_node] and
+		minetest.get_item_group(pointedname, "flammable") >= 1 and
+		minetest.get_node(pointed.above).name == "air" then
+			minetest.set_node(pointed.above, {name = lavastuff.fire_node})
+
+			if lavastuff.game == "nodecore" then
+				nodecore.fire_check_ignite(pointed.under)
+			end
+		end
+	end
+
 	function lavastuff.tool_fire_func(itemstack, user, pointed)
 		local name = user:get_player_name()
 
 		if pointed.type == "node" then
 			local node = minetest.get_node(pointed.under)
-			local node_under = node.name
-			local def = minetest.registered_nodes[node_under]
+			local def = minetest.registered_nodes[node.name]
 
 			if def.on_rightclick then
 				return def.on_rightclick(pointed.under, node, user, itemstack, pointed)
@@ -54,11 +76,10 @@ if minetest.registered_items[fire_node] and lavastuff.enable_tool_fire == true t
 
 			if minetest.is_protected(pointed.under, name) then return end
 
-			if def.on_ignite then
-				def.on_ignite(pointed.under, user)
-			elseif minetest.get_item_group(node_under, "flammable") >= 1
-			and minetest.get_node(pointed.above).name == "air" then
-				minetest.set_node(pointed.above, {name = fire_node})
+			-- Only allow fire every 1+ second(s)
+			if not COOLDOWN:get(user) then
+				activate_func(user, node.name, def, pointed)
+				COOLDOWN:set(user, 1)
 			end
 		end
 	end
@@ -107,8 +128,9 @@ function lavastuff.burn_drops(tool)
 	end
 end
 
-lavastuff.burn_drops("lavastuff:sword")
-lavastuff.burn_drops("lavastuff:axe")
+lavastuff.burn_drops("lavastuff:sword" )
+lavastuff.burn_drops("lavastuff:pick"  )
+lavastuff.burn_drops("lavastuff:axe"   )
 lavastuff.burn_drops("lavastuff:shovel")
 
 --
@@ -192,7 +214,7 @@ if minetest.get_modpath("3d_armor") or minetest.get_modpath("mcl_armor") then
 end
 
 --
--- Tools
+--- Tools
 --
 
 minetest.register_tool("lavastuff:sword", {
@@ -216,57 +238,27 @@ minetest.register_tool("lavastuff:sword", {
 	sound = {breaks = "default_tool_breaks"},
 })
 
-if not minetest.get_modpath("mobs_monster") then
-	minetest.register_alias("mobs:pick_lava", "lavastuff:pick")
-
-	minetest.register_tool("lavastuff:pick", {
-		description = S("Lava Pickaxe"),
-		inventory_image = "lavastuff_pick.png",
-		groups = {tool = 1, pickaxe = 1},
-		light_source = 7, -- Texture will have a glow when dropped
-		tool_capabilities = {
-			burns = true, -- fire_plus support
-			full_punch_interval = 0.7,
-			max_drop_level = 3,
-			groupcaps={
-				cracky = {
-					times = {[1] = 1.8, [2] = 0.8, [3] = 0.40},
-					uses = 40,
-					maxlevel = 3
-				},
+minetest.register_alias_force("mobs:pick_lava", "lavastuff:pick")
+minetest.register_tool("lavastuff:pick", {
+	description = S("Lava Pickaxe"),
+	inventory_image = "lavastuff_pick.png",
+	groups = {tool = 1, pickaxe = 1},
+	light_source = 7, -- Texture will have a glow when dropped
+	tool_capabilities = {
+		full_punch_interval = 0.7,
+		max_drop_level = 3,
+		groupcaps={
+			cracky = {
+				times = {1.8, 0.8, 0.40},
+				uses = 40,
+				maxlevel = 3
 			},
-			damage_groups = {fleshy = 6, burns = 1},
 		},
-		on_place = lavastuff.tool_fire_func,
-	})
-
--- Lava Pick (restores autosmelt functionality)
-
-	lavastuff.burn_drops("lavastuff:pick")
-else
-	minetest.register_alias("lavastuff:pick", "mobs:pick_lava")
-
-	minetest.register_tool(":mobs:pick_lava", {
-		description = S("Lava Pickaxe"),
-		inventory_image = "lavastuff_pick.png",
-		groups = {tool = 1, pickaxe = 1},
-		light_source = 7, -- Texture will have a glow when dropped
-		tool_capabilities = {
-			burns = true, -- fire_plus support
-			full_punch_interval = 0.7,
-			max_drop_level = 3,
-			groupcaps={
-				cracky = {
-					times = {[1] = 1.8, [2] = 0.8, [3] = 0.40},
-					uses = 40,
-					maxlevel = 3
-				},
-			},
-			damage_groups = {fleshy = 6, burns = 1},
-		},
-		on_place = lavastuff.tool_fire_func,
-	})
-end
+		damage_groups = {fleshy = 6, burns = 1},
+	},
+	on_place = lavastuff.tool_fire_func,
+	sound = {breaks = "default_tool_breaks"},
+})
 
 minetest.register_tool("lavastuff:shovel", {
 	description = S("Lava Shovel"),
@@ -278,7 +270,11 @@ minetest.register_tool("lavastuff:shovel", {
 		full_punch_interval = 1.0,
 		max_drop_level=1,
 		groupcaps={
-			crumbly = {times={[1]=1.10, [2]=0.50, [3]=0.30}, uses=30, maxlevel=3},
+			crumbly = {
+				times = {[1]=1.10, [2]=0.50, [3]=0.30},
+				uses = 30,
+				maxlevel = 3
+			},
 		},
 		damage_groups = {fleshy=4},
 	},
@@ -296,7 +292,7 @@ minetest.register_tool("lavastuff:axe", {
 		max_drop_level = 1,
 		groupcaps = {
 			choppy = {
-				times = {[1] = 2.00, [2] = 0.80, [3] = 0.40},
+				times = {2.00, 0.80, 0.40},
 				uses = 40,
 				maxlevel = 3
 			},
@@ -319,6 +315,72 @@ if minetest.get_modpath("mobs_monster") then
 			{"", "default:obsidian_shard", ""},
 		}
 	})
+end
+
+--
+-- Armor
+--
+
+if minetest.get_modpath("3d_armor") then
+	armor.materials.lava = "lavastuff:ingot"
+	armor.config.material_lava = true
+
+	armor:register_armor("lavastuff:helmet_lava", {
+		description = S("Lava Helmet"),
+		inventory_image = "lavastuff_inv_helmet.png",
+		light_source = 7, -- Texture will have a glow when dropped
+		groups = {armor_head=1, armor_heal=12, armor_use=100, armor_fire=10},
+		armor_groups = {fleshy=15},
+		damage_groups = {cracky=2, snappy=1, level=3},
+		wear = 0,
+	})
+	minetest.register_alias("lavastuff:helmet", "lavastuff:helmet_lava")
+
+	armor:register_armor("lavastuff:chestplate_lava", {
+		description = S("Lava Chestplate"),
+		inventory_image = "lavastuff_inv_chestplate.png",
+		light_source = 7, -- Texture will have a glow when dropped
+		groups = {armor_torso=1, armor_heal=12, armor_use=100, armor_fire=10},
+		armor_groups = {fleshy=20},
+		damage_groups = {cracky=2, snappy=1, level=3},
+		wear = 0,
+	})
+	minetest.register_alias("lavastuff:chestplate", "lavastuff:chestplate_lava")
+
+	armor:register_armor("lavastuff:leggings_lava", {
+		description = S("Lava Leggings"),
+		inventory_image = "lavastuff_inv_leggings.png",
+		light_source = 7, -- Texture will have a glow when dropped
+		groups = {armor_legs=1, armor_heal=12, armor_use=100, armor_fire=10},
+		armor_groups = {fleshy=20},
+		damage_groups = {cracky=2, snappy=1, level=3},
+		wear = 0,
+	})
+	minetest.register_alias("lavastuff:leggings", "lavastuff:leggings_lava")
+
+	armor:register_armor("lavastuff:boots_lava", {
+		description = S("Lava Boots"),
+		inventory_image = "lavastuff_inv_boots.png",
+		light_source = 7, -- Texture will have a glow when dropped
+		groups = {armor_feet=1, armor_heal=12, armor_use=100, armor_fire=10, physics_jump=0.5, physics_speed = 1},
+		armor_groups = {fleshy=15},
+		damage_groups = {cracky=2, snappy=1, level=3},
+		wear = 0,
+	})
+	minetest.register_alias("lavastuff:boots", "lavastuff:boots_lava")
+
+	if minetest.get_modpath("shields") then
+		armor:register_armor("lavastuff:shield_lava", {
+			description = S("Lava Shield"),
+			inventory_image = "lavastuff_inven_shield.png",
+			light_source = 7, -- Texture will have a glow when dropped
+			groups = {armor_shield=1, armor_heal=12, armor_use=100, armor_fire=10},
+			armor_groups = {fleshy=20},
+			damage_groups = {cracky=2, snappy=1, level=3},
+			wear = 0,
+		})
+		minetest.register_alias("lavastuff:shield", "lavastuff:shield_lava")
+	end
 end
 
 --
@@ -418,11 +480,17 @@ minetest.register_node("lavastuff:lava_in_a_bottle", {
 })
 
 --
--- Register crafts based on current game
+-- Register crafts/tools based on current game
 --
 
-if minetest.get_modpath("default") and minetest.get_modpath("bucket") and minetest.get_modpath("vessels") then
-	dofile(minetest.get_modpath("lavastuff") .. "/compat/mtg.lua")
-elseif minetest.get_modpath("mcl_core") then
-	dofile(minetest.get_modpath("lavastuff") .. "/compat/mcl2.lua")
+if lavastuff.game == "nodecore" then
+	dofile(MODPATH .. "/crafts/nodecore.lua")
+	dofile(MODPATH.."/items/nodecore.lua")(COOLDOWN, S)
+elseif lavastuff.game == "mineclone" then
+	dofile(MODPATH.."/items/mineclone.lua")(COOLDOWN, S)
+	dofile(MODPATH .. "/crafts/mineclone.lua")
+else
+	if lavastuff.game == "minetest_game" then
+		dofile(MODPATH .. "/crafts/minetest_game.lua")
+	end
 end

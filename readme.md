@@ -1,8 +1,11 @@
 # Lavastuff
 
 [![](https://github.com/minetest-mods/lavastuff/workflows/Check%20&%20Release/badge.svg)](https://github.com/minetest-mods/lavastuff/actions)
+[![ContentDB](https://content.minetest.net/packages/Lone_Wolf/lavastuff/shields/downloads/)](https://content.minetest.net/packages/Lone_Wolf/lavastuff/)
 
-Adds lava armor, tools, and blocks
+Adds lava armor (where possible), tools, and blocks
+
+Please tell me (and everyone else) what you think at https://content.minetest.net/packages/Lone_Wolf/lavastuff/review/
 
 ## **API**
 
@@ -14,7 +17,8 @@ Adds lava armor, tools, and blocks
 
 ## **Game support**
 * **Minetest Game** - 100% support
-* **MineClone2** - (Some features are lost)
+* **MineClone2** - (Partial support)
+* **NodeCore** - (Coming soon, /give works)
 
 ## **Language support**
 

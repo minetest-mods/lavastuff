@@ -19,6 +19,9 @@ read_globals = {
 	-- MC2
 	"mcl_sounds",
 
+	-- Nodecore
+	"nodecore",
+
 	-- Other mods
 	"stairsplus", "toolranks",
 }
