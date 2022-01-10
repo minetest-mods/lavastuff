@@ -27,6 +27,12 @@ if lavastuff.enable_tool_fire ~= false then
 	lavastuff.enable_tool_fire = true
 end
 
+minetest.log("action",
+	"[lavastuff]: Settings loaded"..
+	"\n\tenable_tool_fire = "..dump(lavastuff.enable_tool_fire) ..
+	"\n\tcook_limit = "..dump(lavastuff.cook_limit)
+)
+
 lavastuff.blacklisted_items = { -- Items lava tools will not smelt
 	"default:mese_crystal",
 	"default:mese",
@@ -36,8 +42,14 @@ if minetest.get_modpath("default") then
 	lavastuff.game = "minetest_game"
 elseif minetest.get_modpath("mcl_core") then
 	lavastuff.game = "mineclone"
-elseif minetest.get_modpath("nc_api") then
+elseif minetest.get_modpath("nc_api_all") then
 	lavastuff.game = "nodecore"
+end
+
+if not lavastuff.game then
+	minetest.log("error", "[lavastuff]: No supported game found! Proceed with caution")
+else
+	minetest.log("action", "[lavastuff]: Game detected: "..lavastuff.game)
 end
 
 if minetest.get_modpath("fire") then
@@ -46,9 +58,11 @@ elseif minetest.get_modpath("mcl_fire") then
 	lavastuff.fire_node = "mcl_fire:fire"
 elseif minetest.get_modpath("nc_fire") then
 	lavastuff.fire_node = "nc_fire:fire"
+else
+	minetest.log("error", "[lavastuff]: No fire mod found! Tool fire will be disabled")
 end
 
-if lavastuff.enable_tool_fire == true then
+if lavastuff.enable_tool_fire == true and lavastuff.fire_node then
 	local function activate_func(user, pointedname, pointeddef, pointed)
 		if pointeddef.on_ignite then
 			pointeddef.on_ignite(pointed.under, user)
@@ -483,6 +497,8 @@ minetest.register_node("lavastuff:lava_in_a_bottle", {
 -- Register crafts/tools based on current game
 --
 
+minetest.log("action", "[lavastuff]: Base stuff loaded, beginning game compatibility...")
+
 if lavastuff.game == "nodecore" then
 	dofile(MODPATH .. "/crafts/nodecore.lua")
 	dofile(MODPATH.."/items/nodecore.lua")(COOLDOWN, S)
@@ -494,3 +510,5 @@ else
 		dofile(MODPATH .. "/crafts/minetest_game.lua")
 	end
 end
+
+minetest.log("action", "[lavastuff]: Mod Loaded!")
