@@ -6,14 +6,35 @@ local COOLDOWN = dofile(MODPATH.."/cooldowns.lua")
 local S
 
 if minetest.get_translator ~= nil then
-	S = minetest.get_translator(minetest.get_current_modname())
+	S = minetest.get_translator("mobs")
 else
-	S = function(str, ...)
-		local args={...}
-			return str:gsub(
-				"@%d+", 
-				function(match) return args[tonumber(match:sub(2))] end
-			)
+	if minetest.get_modpath("intllib") then
+		dofile(minetest.get_modpath("intllib").."/init.lua")
+		if intllib.make_gettext_pair then
+			-- New method using gettext.
+			gettext, ngettext = intllib.make_gettext_pair()
+		else
+			-- Old method using text files.
+			gettext = intllib.Getter()
+		end
+		S = gettext
+	else
+		-- mock the translator function for MT 0.4
+		function minetest.translate(textdomain, str, ...)
+			local arg = {n=select('#', ...), ...}
+			return str:gsub("@(.)", function(matched)
+				local c = string.byte(matched)
+				if string.byte("1") <= c and c <= string.byte("9") then
+					return arg[c - string.byte("0")]
+				else
+					return matched
+				end
+			end)
+		end
+		function minetest.get_translator(textdomain)
+			return function(str, ...) return  minetest.translate(textdomain or "", str, ...) end
+		end
+		S = minetest.get_translator("mobs")
 	end
 end
 
