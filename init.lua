@@ -1,6 +1,6 @@
 lavastuff = {}
 
-local MODPATH = minetest.get_modpath("lavastuff")
+local MODPATH = minetest.get_modpath(minetest.get_current_modname())
 
 local COOLDOWN = dofile(MODPATH.."/cooldowns.lua")
 local S
@@ -34,7 +34,7 @@ else
 		function minetest.get_translator(textdomain)
 			return function(str, ...) return  minetest.translate(textdomain or "", str, ...) end
 		end
-		S = minetest.get_translator("mobs")
+		S = minetest.get_translator(minetest.get_current_modname())
 	end
 end
 
