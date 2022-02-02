@@ -6,6 +6,7 @@ mobs_monster?
 3d_armor?
 toolranks?
 moreblocks?
+intllib?
 vessels?
 nc_fire?
 mcl_armor?
