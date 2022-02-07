@@ -1,6 +1,7 @@
 lavastuff = {}
 
-local MODPATH = minetest.get_modpath(minetest.get_current_modname())
+local MODNAME = minetest.get_current_modname()
+local MODPATH = minetest.get_modpath(MODNAME)
 
 local COOLDOWN = dofile(MODPATH.."/cooldowns.lua")
 local S
