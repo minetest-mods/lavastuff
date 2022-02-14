@@ -14,7 +14,7 @@ read_globals = {
 	"dump", "DIR_DELIM", "VoxelArea", "Settings",
 
 	-- MTG
-	"default", "sfinv", "creative", "stairs", "intllib"
+	"default", "sfinv", "creative", "stairs",
 
 	-- MC2
 	"mcl_sounds",
@@ -23,7 +23,7 @@ read_globals = {
 	"nodecore",
 
 	-- Other mods
-	"stairsplus", "toolranks", "gettext"
+	"stairsplus", "toolranks", "gettext", "intllib",
 }
 
 exclude_files = {
