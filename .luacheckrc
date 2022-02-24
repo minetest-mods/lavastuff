@@ -23,7 +23,7 @@ read_globals = {
 	"nodecore",
 
 	-- Other mods
-	"stairsplus", "toolranks",
+	"stairsplus", "toolranks", "gettext", "intllib",
 }
 
 exclude_files = {
