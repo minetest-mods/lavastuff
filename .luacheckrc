@@ -2,7 +2,7 @@ unused_args = false
 max_line_length = 999
 
 globals = {
-	"minetest", "lavastuff", "armor",
+	"minetest", "lavastuff", "armor", "gettext", "intllib", "ngettext",
 }
 
 read_globals = {
@@ -23,7 +23,7 @@ read_globals = {
 	"nodecore",
 
 	-- Other mods
-	"stairsplus", "toolranks", "gettext", "intllib",
+	"stairsplus", "toolranks",
 }
 
 exclude_files = {
