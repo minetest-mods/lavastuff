@@ -450,7 +450,7 @@ minetest.register_node("lavastuff:block", {
 })
 
 if minetest.get_modpath("moreblocks") then
-	stairsplus:register_all("lavastuff", "lava", "lavastuff:ingot", {
+	stairsplus:register_all("lavastuff", "lava", "lavastuff:block", {
 		description = "Lava",
 		tiles = {"lavastuff_block.png"},
 		groups = {cracky = 2, level = 2},
