@@ -465,7 +465,7 @@ elseif minetest.get_modpath("stairs") then
 		{"lavastuff_block.png"},
 		S("Lava Stair"),
 		S("Lava Slab"),
-		default.node_sound_glass_defaults(),
+		default and default.node_sound_glass_defaults(),
 		true,
 		S("Inner Lava Stair"),
 		S("Outer Lava Stair")
