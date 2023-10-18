@@ -74,6 +74,9 @@ minetest.override_item("lavastuff:shovel", {
 
 		local node = minetest.get_node(pointed_thing.under)
 		local def = minetest.registered_nodes[node.name]
+		if not def then
+			return -- Unknown node
+		end
 
 		if not cooldown:get(user) and (def.groups.sand or (def.groups.silica_molten and def.liquidtype == "source")) then
 			cooldown:set(user, 0)

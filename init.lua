@@ -106,21 +106,26 @@ if lavastuff.enable_tool_fire == true and lavastuff.fire_node then
 	function lavastuff.tool_fire_func(itemstack, user, pointed)
 		local name = user:get_player_name()
 
-		if pointed.type == "node" then
-			local node = minetest.get_node(pointed.under)
-			local def = minetest.registered_nodes[node.name]
+		if pointed.type ~= "node" then
+			return
+		end
 
-			if def.on_rightclick then
-				return def.on_rightclick(pointed.under, node, user, itemstack, pointed)
-			end
+		local node = minetest.get_node(pointed.under)
+		local def = minetest.registered_nodes[node.name]
+		if not def then
+			return -- Unknown node
+		end
 
-			if minetest.is_protected(pointed.under, name) then return end
+		if def.on_rightclick then
+			return def.on_rightclick(pointed.under, node, user, itemstack, pointed)
+		end
 
-			-- Only allow fire every 1+ second(s)
-			if not COOLDOWN:get(user) then
-				activate_func(user, node.name, def, pointed)
-				COOLDOWN:set(user, 1)
-			end
+		if minetest.is_protected(pointed.under, name) then return end
+
+		-- Only allow fire every 1+ second(s)
+		if not COOLDOWN:get(user) then
+			activate_func(user, node.name, def, pointed)
+			COOLDOWN:set(user, 1)
 		end
 	end
 end
