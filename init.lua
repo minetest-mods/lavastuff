@@ -449,7 +449,7 @@ minetest.register_node("lavastuff:block", {
 	description = S("Lava Block"),
 	tiles = {"lavastuff_block.png"},
 	is_ground_content = false,
-	sounds = default and default.node_sound_glass_defaults(),
+	sounds = default and default.node_sound_glass_defaults and default.node_sound_glass_defaults(),
 	groups = {cracky = 2, level = 2},
 	light_source = 6,
 })
@@ -460,7 +460,7 @@ if minetest.get_modpath("moreblocks") then
 		tiles = {"lavastuff_block.png"},
 		groups = {cracky = 2, level = 2},
 		light_source = 6,
-		sounds = default and default.node_sound_glass_defaults(),
+		sounds = default and default.node_sound_glass_defaults and default.node_sound_glass_defaults(),
 	})
 elseif minetest.get_modpath("stairs") then
 	stairs.register_stair_and_slab(
@@ -470,7 +470,7 @@ elseif minetest.get_modpath("stairs") then
 		{"lavastuff_block.png"},
 		S("Lava Stair"),
 		S("Lava Slab"),
-		default.node_sound_glass_defaults(),
+		default and default.node_sound_glass_defaults and default.node_sound_glass_defaults(),
 		true,
 		S("Inner Lava Stair"),
 		S("Outer Lava Stair")
@@ -534,7 +534,7 @@ minetest.register_node("lavastuff:lava_in_a_bottle", {
 		fixed = {-0.25, -0.5, -0.25, 0.25, 0.3, 0.25}
 	},
 	groups = {vessel = 1, dig_immediate = 3, attached_node = 1},
-	sounds = default and default.node_sound_glass_defaults(),
+	sounds = default and default.node_sound_glass_defaults and default.node_sound_glass_defaults(),
 })
 
 --
