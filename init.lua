@@ -64,8 +64,11 @@ lavastuff.blacklisted_items = { -- Items lava tools will not smelt
 	"default:mese",
 }
 
+lavastuff.get_sound_glass = function() return nil end
+
 if minetest.get_modpath("default") then
 	lavastuff.game = "minetest_game"
+	lavastuff.get_sound_glass = default.node_sound_glass_defaults()
 elseif minetest.get_modpath("mcl_core") then
 	lavastuff.game = "mineclone"
 elseif minetest.get_modpath("nc_api_all") then
@@ -84,11 +87,11 @@ elseif minetest.get_modpath("mcl_fire") then
 	lavastuff.fire_node = "mcl_fire:fire"
 elseif minetest.get_modpath("nc_fire") then
 	lavastuff.fire_node = "nc_fire:fire"
-else
+elseif lavastuff.enable_tool_fire == true then
 	minetest.log("error", "[lavastuff]: No fire mod found! Tool fire will be disabled")
 end
 
-if lavastuff.enable_tool_fire == true and lavastuff.fire_node then
+if lavastuff.fire_node then
 	local function activate_func(user, pointedname, pointeddef, pointed)
 		if pointeddef.on_ignite then
 			pointeddef.on_ignite(pointed.under, user)
@@ -449,7 +452,7 @@ minetest.register_node("lavastuff:block", {
 	description = S("Lava Block"),
 	tiles = {"lavastuff_block.png"},
 	is_ground_content = false,
-	sounds = default and default.node_sound_glass_defaults(),
+	sounds = lavastuff.get_sound_glass(),
 	groups = {cracky = 2, level = 2},
 	light_source = 6,
 })
@@ -460,7 +463,7 @@ if minetest.get_modpath("moreblocks") then
 		tiles = {"lavastuff_block.png"},
 		groups = {cracky = 2, level = 2},
 		light_source = 6,
-		sounds = default and default.node_sound_glass_defaults(),
+		sounds = lavastuff.get_sound_glass(),
 	})
 elseif minetest.get_modpath("stairs") then
 	stairs.register_stair_and_slab(
@@ -470,7 +473,7 @@ elseif minetest.get_modpath("stairs") then
 		{"lavastuff_block.png"},
 		S("Lava Stair"),
 		S("Lava Slab"),
-		default.node_sound_glass_defaults(),
+		lavastuff.get_sound_glass(),
 		true,
 		S("Inner Lava Stair"),
 		S("Outer Lava Stair")
@@ -534,7 +537,7 @@ minetest.register_node("lavastuff:lava_in_a_bottle", {
 		fixed = {-0.25, -0.5, -0.25, 0.25, 0.3, 0.25}
 	},
 	groups = {vessel = 1, dig_immediate = 3, attached_node = 1},
-	sounds = default and default.node_sound_glass_defaults(),
+	sounds = lavastuff.get_sound_glass(),
 })
 
 --
