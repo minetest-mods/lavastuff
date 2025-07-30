@@ -68,7 +68,7 @@ lavastuff.get_sound_glass = function() return nil end
 
 if minetest.get_modpath("default") then
 	lavastuff.game = "minetest_game"
-	lavastuff.get_sound_glass = default.node_sound_glass_defaults()
+	lavastuff.get_sound_glass = default.node_sound_glass_defaults
 elseif minetest.get_modpath("mcl_core") then
 	lavastuff.game = "mineclone"
 elseif minetest.get_modpath("nc_api_all") then
